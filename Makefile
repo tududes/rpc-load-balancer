@@ -69,7 +69,7 @@ push:
 
 
 update:
-	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE} >> ${REPO_PATH}/update.log 2>&1
+	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE} > ${REPO_PATH}/update.log 2>&1
 	sudo nginx -t
 	sudo systemctl reload nginx
 
