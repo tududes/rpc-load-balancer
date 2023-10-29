@@ -15,7 +15,7 @@ Several environment variables can be adjusted to tailor the setup to specific ne
 - `GIT_ORG`: The GitHub organization (default: `0LNetworkCommunity`).
 - `GIT_REPO`: The repository name (default: `rpc-load-balancer`).
 - `REPO_PATH`: The path to the repository (default: `~/${GIT_REPO}`).
-- `RPC_LB_DOMAIN`: The domain for the RPC load balancer (default: `testnet-rpc.openlibra.space`).
+- `RPC_LB_DOMAIN`: The domain for the RPC load balancer (default: `mainnet-rpc.openlibra.space`).
 - `RPC_LB_SITE_FILE`: The Nginx site configuration filename (default: `rpc-load-balancer`).
 
 ## Usage
