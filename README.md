@@ -24,3 +24,17 @@ Several environment variables can be adjusted to tailor the setup to specific ne
 2. Adjust the environment variables as needed.
 3. Run `make install` to set up the load balancer.
 4. You can configure a root user cronjob entry to execute `cd ~/rpc-load-balancer && make cron` every 15 minutes or so.
+
+## Cronjob Notes
+
+Your cron entry should be done as the nodeuser `crontab -e` but will require a git safe path flag. 
+
+Git Safe Directory:
+git config --global --add safe.directory /home/nodeuser/rpc-load-balancer
+
+
+Cronjob:
+```
+# 0L Network RPC Load Balancer Update
+* * * * * cd /home/nodeuser/rpc-load-balancer && REPO_PATH=/home/nodeuser/rpc-load-balancer make cron >> cron.log 2>&1
+```

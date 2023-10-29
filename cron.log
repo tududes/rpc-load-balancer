@@ -1,0 +1,6 @@
+cd /home/sirouk/rpc-load-balancer && git pull
+fatal: detected dubious ownership in repository at '/home/sirouk/rpc-load-balancer'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/sirouk/rpc-load-balancer
+make: *** [Makefile:64: pull] Error 128
