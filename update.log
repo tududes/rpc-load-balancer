@@ -248,3 +248,6 @@ Nginx configuration updated!
 Error fetching data from http://204.186.74.42:8080/v1: HTTPConnectionPool(host='204.186.74.42', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fcc953c22c0>: Failed to establish a new connection: [Errno 113] No route to host'))
 {'http://65.109.159.23:8080/v1': 1227700, 'http://65.109.80.179:8080/v1': 1227700, 'http://212.227.188.13:8080/v1': 1227704}
 Nginx configuration updated!
+Error fetching data from http://204.186.74.42:8080/v1: HTTPConnectionPool(host='204.186.74.42', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f049e82e2c0>: Failed to establish a new connection: [Errno 113] No route to host'))
+{'http://65.109.159.23:8080/v1': 1232058, 'http://65.109.80.179:8080/v1': 1232058, 'http://212.227.188.13:8080/v1': 1232060}
+Nginx configuration updated!
