@@ -4,3 +4,133 @@ To add an exception for this directory, call:
 
 	git config --global --add safe.directory /home/sirouk/rpc-load-balancer
 make: *** [Makefile:64: pull] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+fatal: detected dubious ownership in repository at '/home/sirouk/rpc-load-balancer'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/sirouk/rpc-load-balancer
+make: *** [Makefile:64: pull] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+fatal: detected dubious ownership in repository at '/home/sirouk/rpc-load-balancer'
+To add an exception for this directory, call:
+
+	git config --global --add safe.directory /home/sirouk/rpc-load-balancer
+make: *** [Makefile:64: pull] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@libra-test-02.(none)')
+make: *** [Makefile:68: push] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@libra-test-02.(none)')
+make: *** [Makefile:68: push] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@libra-test-02.(none)')
+make: *** [Makefile:68: push] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@libra-test-02.(none)')
+make: *** [Makefile:68: push] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+Author identity unknown
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'root@libra-test-02.(none)')
+make: *** [Makefile:68: push] Error 128
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
