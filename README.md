@@ -27,11 +27,18 @@ Several environment variables can be adjusted to tailor the setup to specific ne
 
 ## Cronjob Notes
 
-Your cron entry should be done as the nodeuser `crontab -e` but will require a git safe path flag. 
+Your cron entry should be done as root `sudo crontab -e` while the repo can live elsewhere.
 
-Git Safe Directory:
-git config --global --add safe.directory /home/nodeuser/rpc-load-balancer
+In order for Git to comply, you will need to declare the directory safe:
+```
+sudo git config --global --add safe.directory /home/nodeuser/rpc-load-balancer
+```
 
+You should also configure the GitHub user under root (use your info):
+```
+sudo git config --global user.email "8675309+someuser@users.noreply.github.com"
+sudo git config --global user.name "someuser"
+```
 
 Cronjob:
 ```
