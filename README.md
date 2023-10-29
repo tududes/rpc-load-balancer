@@ -43,5 +43,5 @@ sudo git config --global user.name "someuser"
 Cronjob:
 ```
 # 0L Network RPC Load Balancer Update
-* * * * * cd /home/nodeuser/rpc-load-balancer && REPO_PATH=/home/nodeuser/rpc-load-balancer make cron >> cron.log 2>&1
+*/15 * * * * cd /home/nodeuser/rpc-load-balancer && REPO_PATH=/home/nodeuser/rpc-load-balancer make cron >> cron.log 2>&1
 ```
