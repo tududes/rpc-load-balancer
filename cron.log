@@ -218,3 +218,17 @@ nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 sudo systemctl reload nginx
 cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
+[testnet-6 61cb9f0] rpc health check
+ 2 files changed, 17 insertions(+)
+To https://github.com/0LNetworkCommunity/rpc-load-balancer.git
+   e1e5c9c..61cb9f0  testnet-6 -> testnet-6
+echo "Finished!"
+Finished!
+cd /home/sirouk/rpc-load-balancer && git pull
+Already up to date.
+cd /home/sirouk/rpc-load-balancer && sudo python3 update_endpoints.py /etc/nginx/sites-available/rpc-load-balancer >> /home/sirouk/rpc-load-balancer/update.log 2>&1
+sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+sudo systemctl reload nginx
+cd /home/sirouk/rpc-load-balancer && git add -A && git commit -m "rpc health check" && git push 
