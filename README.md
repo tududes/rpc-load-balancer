@@ -4,7 +4,7 @@ This repository contains the tools to set up and maintain a load balancer for RP
 
 ## How it works
 
-The `update_eligible_enpoints.py` reads from the `endpoints.txt` each RPC fullnode entry, requests the remote `ledger_version`, and ranks the nodes among the top 3% to skip nodes that are behind.
+The `update_endpoints.py` reads from the `endpoints.txt` each RPC fullnode entry, requests the remote `ledger_version`, and ranks the nodes among the top 3% to skip nodes that are behind.
 
 The passing ranked fullnodes are used to update the `nginx` upstream list for round-robin selection.
 
