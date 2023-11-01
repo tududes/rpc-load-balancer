@@ -5,7 +5,7 @@ GIT_ORG=0LNetworkCommunity
 endif
 
 ifndef GIT_REPO
-GIT_REPO=rpc-load-balancer
+GIT_REPO=rpc-load-balancer-v5
 endif
 
 ifndef REPO_PATH
