@@ -46,11 +46,11 @@ with open(nginx_config, "r") as f:
     content = f.readlines()
 
 # Identify the lines to replace
-start_index = content.index("upstream fullnodes {\n")
+start_index = content.index("upstream fullnodesv5 {\n")
 end_index = content.index("}\n", start_index) + 1
 
 # Replace lines with top endpoints
-new_lines = ["upstream fullnodes {\n"] + [f"    server {endpoint.split('//')[1].split('/')[0]};\n" for endpoint in top_endpoints] + ["}\n"]
+new_lines = ["upstream fullnodesv5 {\n"] + [f"    server {endpoint.split('//')[1].split('/')[0]};\n" for endpoint in top_endpoints] + ["}\n"]
 content[start_index:end_index] = new_lines
 
 # Write back to the file
