@@ -1,30 +1,40 @@
-import sys
 import requests
+import sys
+import json
 
 balancer_tolerance = 0.03
 
-#nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
-nginx_config = sys.argv[1]
+# Define the nginx configuration file path
+#nginx_config = sys.argv[1]
+nginx_config = '/home/sirouk/testrpcloadbalancer'
 
 # Read endpoints from the adjacent file
 with open("endpoints.txt", "r") as f:
     endpoints = [line.strip() for line in f.readlines()]
 
-# Fetch ledger_version from each endpoint
+# Fetch diem_ledger_version from each endpoint
 ledger_versions = {}
 for endpoint in endpoints:
     if len(endpoint) > 0:
         try:
-            response = requests.get(endpoint)
-            data = response.json()
-            ledger_version = int(data.get('ledger_version'))
-            if isinstance(ledger_version, int) and ledger_version > 0:  # Ensure ledger_version is an integer
-                ledger_versions[endpoint] = int(ledger_version)
+            # POST request data
+            data = [
+                {"jsonrpc": "2.0", "method": "get_metadata", "params": [1], "id": 1},
+            ]
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(endpoint, headers=headers, json=data, timeout=5)
+
+            # Extract the diem_ledger_version from the response
+            response_data = response.json()
+            ledger_version = response_data[0]["diem_ledger_version"]
+
+            if isinstance(ledger_version, int) and ledger_version > 0:
+                ledger_versions[endpoint] = ledger_version
         except Exception as e:
             print(f"Error fetching data from {endpoint}: {e}")
 
+# Output
 print(ledger_versions)
-#quit()
 
 # Find the highest ledger_version
 max_version = max(ledger_versions.values())
