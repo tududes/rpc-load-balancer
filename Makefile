@@ -61,7 +61,7 @@ export RPC_LB_SITE_CONTENTS
 
 
 define RPC_LB_SITE_CONTENTS_V5
-upstream fullnodes {
+upstream fullnodesv5 {
 	server 127.0.0.1:8080;
 }
 
@@ -79,7 +79,7 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN_V5}/privkey.pem;
 
 	location / {
-		proxy_pass http://fullnodes;
+		proxy_pass http://fullnodesv5;
 		proxy_set_header Host $$host;
 		proxy_set_header X-Real-IP $$remote_addr;
 		proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
@@ -99,7 +99,7 @@ install: rpc-load-balancer
 	sudo systemctl reload nginx
 
 
-install-v5: rpc-load-balancer
+install-v5: rpc-load-balancer-v5
 	sudo apt install -y python3 nginx nginx-common nginx-full
 	sudo ln -sf /etc/nginx/sites-available/${RPC_LB_SITE_FILE_V5} /etc/nginx/sites-enabled/${RPC_LB_SITE_FILE_V5}
 	sudo systemctl reload nginx
