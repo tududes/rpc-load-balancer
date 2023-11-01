@@ -77,6 +77,20 @@ server {
 
 	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN_V5}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN_V5}/privkey.pem;
+	ssl_verify_client optional;
+
+	location / {
+		proxy_pass http://fullnodesv5;
+		proxy_set_header Host $$host;
+		proxy_set_header X-Real-IP $$remote_addr;
+		proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $$scheme;
+	}
+}
+
+server {
+	listen 8081 ssl;
+	server_name ${RPC_LB_DOMAIN_V5};
 
 	location / {
 		proxy_pass http://fullnodesv5;
