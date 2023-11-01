@@ -5,8 +5,7 @@ import json
 balancer_tolerance = 0.03
 
 # Define the nginx configuration file path
-#nginx_config = sys.argv[1]
-nginx_config = '/home/sirouk/testrpcloadbalancer'
+nginx_config = sys.argv[1]
 
 # Read endpoints from the adjacent file
 with open("endpoints.txt", "r") as f:
