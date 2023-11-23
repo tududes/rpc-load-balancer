@@ -1,4 +1,4 @@
-Error fetching data from http://35.86.200.84:8080/v1: HTTPConnectionPool(host='35.86.200.84', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8af8ff9ab0>: Failed to establish a new connection: [Errno 111] Connection refused'))
-Error fetching data from http://172.104.214.254:8080/v1: HTTPConnectionPool(host='172.104.214.254', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8af8ffb040>: Failed to establish a new connection: [Errno 111] Connection refused'))
-{'http://192.168.100.42:8080/v1': 133859, 'http://136.244.71.63:8080/v1': 133859, 'http://188.40.107.105:8080/v1': 133859}
+Error fetching data from http://35.86.200.84:8080/v1: HTTPConnectionPool(host='35.86.200.84', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0e62f21ab0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+Error fetching data from http://172.104.214.254:8080/v1: HTTPConnectionPool(host='172.104.214.254', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0e62f23040>: Failed to establish a new connection: [Errno 111] Connection refused'))
+{'http://192.168.100.42:8080/v1': 137805, 'http://136.244.71.63:8080/v1': 137805, 'http://188.40.107.105:8080/v1': 137807}
 Nginx configuration updated!
