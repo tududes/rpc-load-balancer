@@ -15,7 +15,7 @@ ledger_versions = {}
 for endpoint in endpoints:
     if len(endpoint) > 0:
         try:
-            response = requests.get(endpoint)
+            response = requests.get(endpoint, timeout=5)
             data = response.json()
             ledger_version = int(data.get('ledger_version'))
             if isinstance(ledger_version, int) and ledger_version > 0:  # Ensure ledger_version is an integer
