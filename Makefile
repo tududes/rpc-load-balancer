@@ -13,7 +13,7 @@ REPO_PATH=~/${GIT_REPO}
 endif
 
 ifndef RPC_LB_DOMAIN
-RPC_LB_DOMAIN=mainnet-rpc.openlibra.space
+RPC_LB_DOMAIN=rpc.openlibra.space
 endif
 
 ifndef RPC_LB_SITE_FILE
