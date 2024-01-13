@@ -1,3 +1,2 @@
-Error fetching data from http://70.15.242.6:8080/v1: HTTPConnectionPool(host='70.15.242.6', port=8080): Read timed out. (read timeout=5)
-{'http://73.181.115.53:8080/v1/': 10140377}
+{'http://70.15.242.6:8080/v1': 10144112, 'http://73.181.115.53:8080/v1/': 10144131}
 Nginx configuration updated!
