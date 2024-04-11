@@ -1,4 +1,4 @@
-Error fetching data from http://73.181.115.53:8080/v1: HTTPConnectionPool(host='73.181.115.53', port=8080): Max retries exceeded with url: /v1 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7fb86d092920>, 'Connection to 73.181.115.53 timed out. (connect timeout=5)'))
-Error fetching data from http://144.76.104.93:8080/v1: HTTPConnectionPool(host='144.76.104.93', port=8080): Max retries exceeded with url: /v1 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7fb86d092620>, 'Connection to 144.76.104.93 timed out. (connect timeout=5)'))
-{'http://70.15.242.6:8080/v1': 114712, 'http://136.243.59.175:8080/v1': 79978, 'http://104.248.94.195:8080/v1': 71645}
+Error fetching data from http://73.181.115.53:8080/v1: HTTPConnectionPool(host='73.181.115.53', port=8080): Max retries exceeded with url: /v1 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7f79cd2e2920>, 'Connection to 73.181.115.53 timed out. (connect timeout=5)'))
+Error fetching data from http://144.76.104.93:8080/v1: HTTPConnectionPool(host='144.76.104.93', port=8080): Max retries exceeded with url: /v1 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7f79cd2e2620>, 'Connection to 144.76.104.93 timed out. (connect timeout=5)'))
+{'http://70.15.242.6:8080/v1': 118361, 'http://136.243.59.175:8080/v1': 79978, 'http://104.248.94.195:8080/v1': 71645}
 Nginx configuration updated!
