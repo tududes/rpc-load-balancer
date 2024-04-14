@@ -6,5 +6,6 @@ Error fetching data from # Bethose: Invalid URL '# Bethose': No schema supplied.
 Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
 Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No schema supplied. Perhaps you meant http://# zerooooooooo1?
 Error fetching data from # Alan Yoon: Invalid URL '# Alan Yoon': No schema supplied. Perhaps you meant http://# Alan Yoon?
-{'http://70.15.242.6:8080/v1': 1371017, 'http://65.109.80.179:8080/v1': 1371017, 'http://172.104.211.8:8080/v1': 1371017, 'http://160.202.129.29:8080/v1': 1371019, 'http://222.101.31.242:8080/v1': 1371019}
+Error fetching data from http://222.101.31.242:8080/v1: HTTPConnectionPool(host='222.101.31.242', port=8080): Max retries exceeded with url: /v1 (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x7f8387bdea70>, 'Connection to 222.101.31.242 timed out. (connect timeout=5)'))
+{'http://70.15.242.6:8080/v1': 1374839, 'http://65.109.80.179:8080/v1': 1374841, 'http://172.104.211.8:8080/v1': 1374841, 'http://160.202.129.29:8080/v1': 1374841}
 Nginx configuration updated!
