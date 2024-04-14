@@ -1,5 +1,9 @@
-Error fetching data from #http://70.15.242.6:8080/v1: No connection adapters were found for '#http://70.15.242.6:8080/v1'
+Error fetching data from # siroukhttp://70.15.242.6:8080/v1: No connection adapters were found for '# siroukhttp://70.15.242.6:8080/v1'
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
+Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://136.243.59.175:8080/v1': 1122236}
+Error fetching data from # Bethose: Invalid URL '# Bethose': No schema supplied. Perhaps you meant http://# Bethose?
+Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
+Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No schema supplied. Perhaps you meant http://# zerooooooooo1?
+{'http://65.109.80.179:8080/v1': 1211129, 'http://172.104.211.8:8080/v1': 1211129, 'http://160.202.129.29:8080/v1': 1211129}
 Nginx configuration updated!
