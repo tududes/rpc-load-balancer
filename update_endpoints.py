@@ -1,7 +1,7 @@
 import sys
 import requests
 
-balancer_tolerance = 0.03
+balancer_tolerance = 0.01
 
 #nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
 nginx_config = sys.argv[1]
