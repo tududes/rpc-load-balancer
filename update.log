@@ -1,10 +1,12 @@
 Error fetching data from # sirouk: Invalid URL '# sirouk': No schema supplied. Perhaps you meant http://# sirouk?
+Error fetching data from # wuya51: Invalid URL '# wuya51': No schema supplied. Perhaps you meant http://# wuya51?
+Error fetching data from # Bethose: Invalid URL '# Bethose': No schema supplied. Perhaps you meant http://# Bethose?
+Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No schema supplied. Perhaps you meant http://# zerooooooooo1?
+Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
+Error fetching data from # Alan Yoon: Invalid URL '# Alan Yoon': No schema supplied. Perhaps you meant http://# Alan Yoon?
+Error fetching data from # mystery: Invalid URL '# mystery': No schema supplied. Perhaps you meant http://# mystery?
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
 Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-Error fetching data from # Bethose: Invalid URL '# Bethose': No schema supplied. Perhaps you meant http://# Bethose?
-Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
-Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No schema supplied. Perhaps you meant http://# zerooooooooo1?
-Error fetching data from # Alan Yoon: Invalid URL '# Alan Yoon': No schema supplied. Perhaps you meant http://# Alan Yoon?
-{'http://70.15.242.6:8080/v1': 1755500, 'http://65.109.80.179:8080/v1': 1806868, 'http://172.104.211.8:8080/v1': 1806868, 'http://160.202.129.29:8080/v1': 1806868, 'http://222.101.31.242:8080/v1': 1806868}
+{'http://70.15.242.6:8080/v1': 1755500, 'http://38.242.137.192:8080/v1': 1809988, 'http://65.109.80.179:8080/v1': 1809988, 'http://160.202.129.29:8080/v1': 1809990, 'http://172.104.211.8:8080/v1': 1809990, 'http://222.101.31.242:8080/v1': 1809990, 'http://209.38.172.53:8080/v1': 1809992}
 Nginx configuration updated!
