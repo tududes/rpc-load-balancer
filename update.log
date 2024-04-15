@@ -6,5 +6,5 @@ Error fetching data from # Bethose: Invalid URL '# Bethose': No schema supplied.
 Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
 Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No schema supplied. Perhaps you meant http://# zerooooooooo1?
 Error fetching data from # Alan Yoon: Invalid URL '# Alan Yoon': No schema supplied. Perhaps you meant http://# Alan Yoon?
-{'http://70.15.242.6:8080/v1': 1665505, 'http://65.109.80.179:8080/v1': 1665505, 'http://172.104.211.8:8080/v1': 1665505, 'http://160.202.129.29:8080/v1': 1665505, 'http://222.101.31.242:8080/v1': 1593343}
+{'http://70.15.242.6:8080/v1': 1669286, 'http://65.109.80.179:8080/v1': 1669286, 'http://172.104.211.8:8080/v1': 1669286, 'http://160.202.129.29:8080/v1': 1669286, 'http://222.101.31.242:8080/v1': 1669288}
 Nginx configuration updated!
