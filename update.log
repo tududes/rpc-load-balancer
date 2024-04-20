@@ -8,5 +8,5 @@ Error fetching data from # 0xslipk: Invalid URL '# 0xslipk': No schema supplied.
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
 Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://70.15.242.6:8080/v1': 3364647, 'http://222.101.31.242:8080/v1': 3364647, 'http://65.109.80.179:8080/v1': 3364649, 'http://172.104.211.8:8080/v1': 3364649, 'http://38.242.137.192:8080/v1': 3364649, 'http://160.202.129.29:8080/v1': 3364651, 'http://209.38.172.53:8080/v1': 3364651}
+{'http://70.15.242.6:8080/v1': 3368253, 'http://222.101.31.242:8080/v1': 3368253, 'http://65.109.80.179:8080/v1': 3368255, 'http://172.104.211.8:8080/v1': 3368255, 'http://38.242.137.192:8080/v1': 3368255, 'http://160.202.129.29:8080/v1': 3368257, 'http://209.38.172.53:8080/v1': 3368255}
 Nginx configuration updated!
