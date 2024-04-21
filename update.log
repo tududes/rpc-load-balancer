@@ -1,5 +1,5 @@
 Error fetching data from # sirouk: Invalid URL '# sirouk': No schema supplied. Perhaps you meant http://# sirouk?
-Error fetching data from http://70.15.242.6:8080/v1: HTTPConnectionPool(host='70.15.242.6', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f73fb5424a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+Error fetching data from http://70.15.242.6:8080/v1: HTTPConnectionPool(host='70.15.242.6', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fb9f31524a0>: Failed to establish a new connection: [Errno 111] Connection refused'))
 Error fetching data from # Alan Yoon: Invalid URL '# Alan Yoon': No schema supplied. Perhaps you meant http://# Alan Yoon?
 Error fetching data from # Bethose | SDL: Invalid URL '# Bethose | SDL': No schema supplied. Perhaps you meant http://# Bethose | SDL?
 Error fetching data from # dmski: Invalid URL '# dmski': No schema supplied. Perhaps you meant http://# dmski?
@@ -9,5 +9,5 @@ Error fetching data from # 0xslipk: Invalid URL '# 0xslipk': No schema supplied.
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
 Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://222.101.31.242:8080/v1': 3885297, 'http://65.109.80.179:8080/v1': 3885297, 'http://172.104.211.8:8080/v1': 3885297, 'http://38.242.137.192:8080/v1': 3885297, 'http://160.202.129.29:8080/v1': 3885299, 'http://209.38.172.53:8080/v1': 3885299}
+{'http://222.101.31.242:8080/v1': 3888882, 'http://65.109.80.179:8080/v1': 3888884, 'http://172.104.211.8:8080/v1': 3888886, 'http://38.242.137.192:8080/v1': 3888884, 'http://160.202.129.29:8080/v1': 3888886, 'http://209.38.172.53:8080/v1': 3888886}
 Nginx configuration updated!
