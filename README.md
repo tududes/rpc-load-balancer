@@ -20,9 +20,9 @@ Several environment variables can be adjusted to tailor the setup to specific ne
 
 ## Usage
 
-1. Clone this repository.
+1. Clone this repository `cd ~ && git clone https://github.com/0LNetworkCommunity/rpc-load-balancer`
 2. Adjust the environment variables as needed.
-3. Run `make install` to set up the load balancer.
+3. Install make `apt install make -y`, enter the repo directory `cd ~/rpc-load-balancer`, and run `make install` to set up the load balancer.
 4. You can configure a root user cronjob entry to execute `cd ~/rpc-load-balancer && make cron` every 15 minutes or so.
 
 ## Cronjob Notes
