@@ -1,8 +1,8 @@
 # sirouk
 http://70.15.242.6:8080/v1
 
-# Alan Yoon
-http://222.101.31.242:8080/v1
+## Alan Yoon
+#http://222.101.31.242:8080/v1
 
 # Bethose | SDL
 http://65.109.80.179:8080/v1
