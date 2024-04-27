@@ -1,7 +1,8 @@
 import sys
 import requests
 
-balancer_tolerance = 0.01
+# Tolerance of max height: 0.02%
+balancer_tolerance = 0.0002
 
 #nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
 nginx_config = sys.argv[1]
