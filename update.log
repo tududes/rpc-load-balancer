@@ -4,12 +4,11 @@ Error fetching data from #http://222.101.31.242:8080/v1: No connection adapters 
 Error fetching data from # Bethose | SDL: Invalid URL '# Bethose | SDL': No scheme supplied. Perhaps you meant https://# Bethose | SDL?
 Error fetching data from # dmski: Invalid URL '# dmski': No scheme supplied. Perhaps you meant https://# dmski?
 Error fetching data from # wuya51: Invalid URL '# wuya51': No scheme supplied. Perhaps you meant https://# wuya51?
-Error fetching data from http://38.242.137.192:8080/v1: HTTPConnectionPool(host='38.242.137.192', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f8f0bed8340>: Failed to establish a new connection: [Errno 111] Connection refused'))
 Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No scheme supplied. Perhaps you meant https://# zerooooooooo1?
 Error fetching data from # 0xslipk: Invalid URL '# 0xslipk': No scheme supplied. Perhaps you meant https://# 0xslipk?
 Error fetching data from #TheOneID: Invalid URL '#TheOneID': No scheme supplied. Perhaps you meant https://#TheOneID?
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
 Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://70.15.242.6:8080/v1': 6423735, 'http://65.109.80.179:8080/v1': 6423735, 'http://172.104.211.8:8080/v1': 6423735, 'http://160.202.129.29:8080/v1': 6440426, 'http://209.38.172.53:8080/v1': 6424501, 'http://65.109.30.57:8080/v1': 6440426}
+{'http://70.15.242.6:8080/v1': 6423735, 'http://65.109.80.179:8080/v1': 6423735, 'http://172.104.211.8:8080/v1': 6423735, 'http://38.242.137.192:8080/v1': 6443850, 'http://160.202.129.29:8080/v1': 6444082, 'http://209.38.172.53:8080/v1': 6424501, 'http://65.109.30.57:8080/v1': 6444082}
 Nginx configuration updated!
