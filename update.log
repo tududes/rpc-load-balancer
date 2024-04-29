@@ -10,5 +10,5 @@ Error fetching data from #TheOneID: Invalid URL '#TheOneID': No scheme supplied.
 Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
 Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
 Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://70.15.242.6:8080/v1': 6423735, 'http://65.109.80.179:8080/v1': 6564876, 'http://172.104.211.8:8080/v1': 6564904, 'http://38.242.137.192:8080/v1': 6565732, 'http://160.202.129.29:8080/v1': 6565736, 'http://209.38.172.53:8080/v1': 6565736, 'http://65.109.30.57:8080/v1': 6565736}
+{'http://70.15.242.6:8080/v1': 6423735, 'http://65.109.80.179:8080/v1': 6564876, 'http://172.104.211.8:8080/v1': 6569218, 'http://38.242.137.192:8080/v1': 6569390, 'http://160.202.129.29:8080/v1': 6569390, 'http://209.38.172.53:8080/v1': 6569390, 'http://65.109.30.57:8080/v1': 6569392}
 Nginx configuration updated!
