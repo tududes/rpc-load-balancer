@@ -1,17 +1,2 @@
-Error fetching data from # sirouk: Invalid URL '# sirouk': No scheme supplied. Perhaps you meant https://# sirouk?
-Error fetching data from ## Alan Yoon: Invalid URL '## Alan Yoon': No scheme supplied. Perhaps you meant https://## Alan Yoon?
-Error fetching data from #http://222.101.31.242:8080/v1: No connection adapters were found for '#http://222.101.31.242:8080/v1'
-Error fetching data from # Bethose | SDL: Invalid URL '# Bethose | SDL': No scheme supplied. Perhaps you meant https://# Bethose | SDL?
-Error fetching data from #http://65.109.80.179:8080/v1: No connection adapters were found for '#http://65.109.80.179:8080/v1'
-Error fetching data from # dmski: Invalid URL '# dmski': No scheme supplied. Perhaps you meant https://# dmski?
-Error fetching data from #http://172.104.211.8:8080/v1: No connection adapters were found for '#http://172.104.211.8:8080/v1'
-Error fetching data from # wuya51: Invalid URL '# wuya51': No scheme supplied. Perhaps you meant https://# wuya51?
-Error fetching data from # zerooooooooo1: Invalid URL '# zerooooooooo1': No scheme supplied. Perhaps you meant https://# zerooooooooo1?
-Error fetching data from # 0xslipk: Invalid URL '# 0xslipk': No scheme supplied. Perhaps you meant https://# 0xslipk?
-Error fetching data from # TheOneID: Invalid URL '# TheOneID': No scheme supplied. Perhaps you meant https://# TheOneID?
-Error fetching data from # Kalvinen: Invalid URL '# Kalvinen': No scheme supplied. Perhaps you meant https://# Kalvinen?
-Error fetching data from #http://94.130.22.86:8080/v1: No connection adapters were found for '#http://94.130.22.86:8080/v1'
-Error fetching data from #http://136.243.59.175:8080/v1: No connection adapters were found for '#http://136.243.59.175:8080/v1'
-Error fetching data from #http://104.248.94.195:8080/v1: No connection adapters were found for '#http://104.248.94.195:8080/v1'
-{'http://70.15.242.6:8080/v1': 6995163, 'http://38.242.137.192:8080/v1': 6995161, 'http://160.202.129.29:8080/v1': 6995163, 'http://209.38.172.53:8080/v1': 6995163, 'http://65.109.30.57:8080/v1': 6995163, 'http://vfn.0l.kalvkusk.io:8080/v1': 6995167}
+{'http://70.15.242.6:8080/v1': 6995297, 'http://38.242.137.192:8080/v1': 6995299, 'http://160.202.129.29:8080/v1': 6995299, 'http://209.38.172.53:8080/v1': 6995299, 'http://65.109.30.57:8080/v1': 6995301, 'http://vfn.0l.kalvkusk.io:8080/v1': 6995301}
 Nginx configuration updated!

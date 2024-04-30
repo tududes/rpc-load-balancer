@@ -9,7 +9,8 @@ nginx_config = sys.argv[1]
 
 # Read endpoints from the adjacent file
 with open("endpoints.txt", "r") as f:
-    endpoints = [line.strip() for line in f.readlines()]
+    endpoints = [line.strip() for line in f.readlines() if not line.startswith('#')]
+
 
 # Fetch ledger_version from each endpoint
 ledger_versions = {}
