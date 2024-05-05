@@ -1,3 +1,3 @@
-Error fetching data from http://65.109.30.57:8080/v1: HTTPConnectionPool(host='65.109.30.57', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f241f758970>: Failed to establish a new connection: [Errno 111] Connection refused'))
-{'http://70.15.242.6:8080/v1': 8589934, 'http://38.242.137.192:8080/v1': 8589932, 'http://160.202.129.29:8080/v1': 8589934, 'http://209.38.172.53:8080/v1': 8589934, 'http://vfn.0l.kalvkusk.io:8080/v1': 8589936}
+Error fetching data from http://65.109.30.57:8080/v1: HTTPConnectionPool(host='65.109.30.57', port=8080): Max retries exceeded with url: /v1 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7f0b0f238970>: Failed to establish a new connection: [Errno 111] Connection refused'))
+{'http://70.15.242.6:8080/v1': 8593630, 'http://38.242.137.192:8080/v1': 8593630, 'http://160.202.129.29:8080/v1': 8593634, 'http://209.38.172.53:8080/v1': 8593632, 'http://vfn.0l.kalvkusk.io:8080/v1': 8593634}
 Nginx configuration updated!
