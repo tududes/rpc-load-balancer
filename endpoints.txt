@@ -1,5 +1,5 @@
 # 0l.fyi
-https://rpc.0l.fyi/v1
+http://rpc.0l.fyi:443/v1
 
 # Alan Yoon
 http://222.101.31.242:8080/v1
