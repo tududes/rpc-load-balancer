@@ -1,8 +1,10 @@
 import sys
 import requests
 
-# Tolerance of max height: 0.02%
-balancer_tolerance = 0.0002
+
+# Tolerance of max height: fixed count integer
+balancer_tolerance = 500  # This is the fixed count integer tolerance
+
 
 #nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
 nginx_config = sys.argv[1]
@@ -31,8 +33,11 @@ print(ledger_versions)
 # Find the highest ledger_version
 max_version = max(ledger_versions.values())
 
-# Filter out endpoints that are within 3% of the highest ledger_version
-top_endpoints = [endpoint for endpoint, version in ledger_versions.items() if version >= int((1.0 - balancer_tolerance) * max_version)]
+# Filter out endpoints that are within a range ±5 of the highest ledger_version
+top_endpoints = [
+    endpoint for endpoint, version in ledger_versions.items()
+    if (max_version - balancer_tolerance) <= version <= (max_version + balancer_tolerance)
+]
 
 # Update Nginx configuration
 with open(nginx_config, "r") as f:
