@@ -1,4 +1,7 @@
-## Alan Yoon
+# 0l.fyi
+https://rpc.0l.fyi/v1
+
+# Alan Yoon
 http://222.101.31.242:8080/v1
 
 # Bethose | SDL
