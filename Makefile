@@ -54,8 +54,6 @@ export RPC_LB_SITE_CONTENTS
 install: rpc-load-balancer
 	sudo apt install -y python3 nginx nginx-common nginx-full
 	sudo ln -sf /etc/nginx/sites-available/${RPC_LB_SITE_FILE} /etc/nginx/sites-enabled/${RPC_LB_SITE_FILE}
-	sudo nginx -t
-	sudo systemctl reload nginx
 	sudo apt install certbot python3-certbot-nginx -y
 	sudo certbot certonly --manual --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory --domain ${RPC_LB_DOMAIN}
 	sudo systemctl reload nginx
