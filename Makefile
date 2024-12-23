@@ -40,7 +40,7 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 	
 	location / {
-		proxy_pass http://fullnodes;
+		proxy_pass https://fullnodes;
 		add_header Access-Control-Allow-Origin *;
         add_header Access-Control-Max-Age 3600;
         add_header Access-Control-Expose-Headers Content-Length;
