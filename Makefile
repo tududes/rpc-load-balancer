@@ -40,11 +40,15 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 	
 	location / {
-		proxy_pass http://fullnodes;
+		proxy_pass https://fullnodes;
+		add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Max-Age 3600;
+        add_header Access-Control-Expose-Headers Content-Length;
 		proxy_set_header Host $$host;
-		proxy_set_header X-Real-IP $$remote_addr;
-		proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
-		proxy_set_header X-Forwarded-Proto $$scheme;
+		proxy_set_header X-Real-IP $$remote_addr;        
+		proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
 	}
 }
 endef
