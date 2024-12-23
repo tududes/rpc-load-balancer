@@ -11,7 +11,7 @@ import requests
 dotenv.load_dotenv()
 balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 7)
 chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
-
+rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
 
 #nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
 nginx_config = sys.argv[1]
@@ -20,17 +20,15 @@ nginx_config = sys.argv[1]
 with open("endpoints.txt", "r") as f:
     endpoints = [line.strip() for line in f.readlines() if line.strip() != '' and not line.startswith('#')]
 
-
-RPC_LIST = "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json"
 try:
-    response = requests.get(RPC_LIST, timeout=5)
+    response = requests.get(rpc_list, timeout=5)
     data = response.json()
     for rpc in data:
         if rpc['RPC Address'] not in endpoints:
             endpoints.append(rpc['RPC Address'])
     #print(data)
 except Exception as e:
-    print(f"Error fetching data from {RPC_LIST}: {e}")
+    print(f"Error fetching data from {rpc_list}: {e}")
 
 #print(endpoints)
 #quit()
