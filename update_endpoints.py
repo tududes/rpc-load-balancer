@@ -169,8 +169,8 @@ upstream_ports = []
 for idx, endpoint in enumerate(top_endpoints, start=1):
     host_port = endpoint.split("//")[1].split("/")[0]
     hp_split = host_port.split(":")
-    host = host_port[0]
-    port = host_port[1] or "443"
+    host = hp_split[0]
+    port = hp_split[1] or "443"
     
     new_port = port_start + idx
     upstream_ports.append(new_port)
