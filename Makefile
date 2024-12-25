@@ -60,16 +60,14 @@ server {
 		# proxy_http_version 1.1;
 		# proxy_ssl_verify off;
 
-		set $upstream "";
+		set $$upstream "";
 		rewrite_by_lua '
 				local upstreams = {
 						"http://127.0.0.1:${RPC_LB_PORT}"
 				}
 				ngx.var.upstream = upstreams[ math.random( #upstreams ) ] 
 		';
-		proxy_pass $upstream;
-
-
+		proxy_pass $$upstream;
 	}
 }
 endef
