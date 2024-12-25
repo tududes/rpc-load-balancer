@@ -150,7 +150,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     upstream_ports.append(new_port)
     
     #server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
-    server_port_entries.append(f"    server {host}{port};\n")
+    server_port_entries.append(f"    server {host}:{port};\n")
     
     # add_header Access-Control-Allow-Origin *;
     # add_header Access-Control-Max-Age 3600;
