@@ -24,7 +24,7 @@ endif
 define RPC_LB_SITE_CONTENTS
 #BEGIN_PROXY_SERVERS
 #END_PROXY_SERVERS
-upstream fullnodes {
+upstream to_proxy_servers {
 	server 127.0.0.1:30001;
 }
 
@@ -42,7 +42,7 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 
 	location / {
-		proxy_pass http://fullnodes;
+		proxy_pass http://to_proxy_servers;
 		proxy_intercept_errors on;
 		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 

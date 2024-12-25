@@ -154,16 +154,21 @@ with open(nginx_config, "r") as f:
     nginx_cfg_content = f.readlines()
 
 # Identify the lines to replace
-start_index = nginx_cfg_content.index("upstream fullnodes {\n")
+server_port_beg = "upstream to_proxy_servers {\n"
+server_port_end = "}\n"
+server_block_beg = "#BEGIN_PROXY_SERVERS\n"
+server_block_end = "#END_PROXY_SERVERS\n"
+
+start_index = nginx_cfg_content.index(server_port_beg)
 end_index = nginx_cfg_content.index("}\n", start_index) + 1
 
-start_proxy_index = nginx_cfg_content.index("#BEGIN_PROXY_SERVERS\n")
-end_proxy_index = nginx_cfg_content.index("#END_PROXY_SERVERS\n", start_proxy_index) + 1
+start_proxy_index = nginx_cfg_content.index(server_block_beg)
+end_proxy_index = nginx_cfg_content.index(server_block_end, start_proxy_index) + 1
 
 # Replace lines with top endpoints
 port_start = 30000  # Starting port for localhost upstream servers
-server_port_entries = ["upstream fullnodes {\n"]
-server_block_entries = ["#BEGIN_PROXY_SERVERS\n"]
+server_port_entries = [server_port_beg]
+server_block_entries = [server_block_beg]
 upstream_ports = []
 
 for idx, endpoint in enumerate(top_endpoints, start=1):
@@ -189,8 +194,8 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     )
     server_block_entries.append(server_block)
 
-server_port_entries.append("}\n")
-server_block_entries.append("#END_PROXY_SERVERS\n")
+server_port_entries.append(server_port_end)
+server_block_entries.append(server_block_end)
 
 # Replace the old upstream block with the new configuration
 nginx_cfg_content[start_index:end_index] = server_port_entries
