@@ -1,50 +1,140 @@
+
 # RPC Load Balancer Setup
 
-This repository contains the tools to set up and maintain a load balancer for RPC endpoints.
+This repository provides tools for setting up a dynamic RPC load balancer using `nginx`.
 
-## How it works
+---
 
-The `update_endpoints.py` reads from the `endpoints.txt` each RPC fullnode entry, requests the remote `ledger_version`, and ranks the nodes among the top 3% to skip nodes that are behind.
+## Overview
 
-The passing ranked fullnodes are used to update the `nginx` upstream list for round-robin selection.
+The `update_endpoints.py` script automates the management of RPC fullnodes by dynamically updating the `nginx` configuration. This ensures only the top-performing nodes are used for proxying.
+
+### How It Works:
+1. Reads fullnode entries from `endpoints.txt`.
+2. Fetches remote `ledger_version` to assess node health.
+3. Selects the top 3 nodes based on performance.
+4. Configures `nginx` with a unique proxy setup for each selected node.
+
+---
 
 ## Configuration
 
-Several environment variables can be adjusted to tailor the setup to specific needs:
+The setup can be customized using the following environment variables:
 
-- `GIT_ORG`: The GitHub organization (default: `tududes`).
-- `GIT_REPO`: The repository name (default: `rpc-load-balancer`).
-- `REPO_PATH`: The path to the repository (default: `~/${GIT_REPO}`).
-- `RPC_LB_DOMAIN`: The domain for the RPC load balancer (default: `namada-rpc.tududes.com`).
-- `RPC_LB_SITE_FILE`: The Nginx site configuration filename (default: `rpc-load-balancer`).
+| Variable              | Description                                                  | Default                         |
+|-----------------------|--------------------------------------------------------------|---------------------------------|
+| `GIT_ORG`            | GitHub organization name.                                    | `tududes`                      |
+| `GIT_REPO`           | Repository name.                                             | `rpc-load-balancer`            |
+| `REPO_PATH`          | Path to the repository.                                      | `~/${GIT_REPO}`                |
+| `RPC_LB_DOMAIN`      | Domain for the RPC load balancer.                            | `namada-rpc.tududes.com`       |
+| `BALANCER_TOLERANCE` | Maximum difference in ledger height for eligible fullnodes.  | `7`                            |
+| `CHAIN_ID`           | Chain ID to validate fullnode compatibility.                 | `namada.5f5de2dd1b88cba30586420` |
+| `LOCAL_RPC_PORT`     | Port for local RPC service when applicable.                  | `26657`                        |
 
-## Usage
+---
 
-1. Clone this repository `cd ~ && git clone https://github.com/tududes/rpc-load-balancer`
-2. Adjust the environment variables as needed.
-3. Install make `apt install make -y`, enter the repo directory `cd ~/rpc-load-balancer`, and run `make install` to set up the load balancer.
-4. You can configure a root user cronjob entry to execute `cd ~/rpc-load-balancer && make cron` every 15 minutes or so.
+## Setup Instructions
 
-## Cronjob Notes
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/tududes/rpc-load-balancer.git ~/rpc-load-balancer
+   cd ~/rpc-load-balancer
+   ```
 
-Your cron entry should be done as root `sudo crontab -e` while the repo can live elsewhere.
+2. Install the load balancer:
+   ```bash
+   apt install make -y
+   make install
+   ```
 
-In order for Git to comply, you will need to declare the directory safe:
+3. Configure your environment variables:
+   - Edit `.env` to customize the behavior.
 
+4. Test the setup:
+   - Verify the `nginx` configuration:
+     ```bash
+     sudo nginx -t
+     ```
+   - Reload `nginx`:
+     ```bash
+     sudo systemctl reload nginx
+     ```
+
+5. Automate updates:
+   - Add a cron job to periodically update the load balancer:
+     ```bash
+     sudo crontab -e
+     ```
+
+   - Add the following entry (adjust the path as necessary):
+     ```bash
+     # RPC Load Balancer Update
+     */15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make cron >> cron.log 2>&1
+     ```
+
+---
+
+## Features
+
+- **Dynamic Updates:** Automatically refresh upstream nodes based on performance and health.
+- **Proxy Optimization:** Ensures proper `Host` headers for multi-site compatibility.
+- **SSL Ready:** Compatible with Let's Encrypt SSL certificates for secure traffic.
+- **High Availability:** Filters out slow or outdated nodes to maintain service quality.
+- **Customizable Tolerance:** Adjust ledger height differences to suit your needs.
+
+---
+
+## Example Nginx Configuration
+
+Generated configuration includes the top three RPC fullnodes for proxying:
+
+```nginx
+#BEGIN_PROXY_SERVERS
+server {
+  listen      30001 default_server;
+  server_name 30001.local;
+  location / {
+      proxy_pass       https://127.0.0.1:26657;
+      proxy_set_header Host 127.0.0.1;
+  }
+}
+server {
+  listen      30002 default_server;
+  server_name 30002.local;
+  location / {
+      proxy_pass       https://namada.liquify.com:443;
+      proxy_set_header Host namada.liquify.com;
+  }
+}
+server {
+  listen      30003 default_server;
+  server_name 30003.local;
+  location / {
+      proxy_pass       https://namada-rpc.mandragora.io:443;
+      proxy_set_header Host namada-rpc.mandragora.io;
+  }
+}
+#END_PROXY_SERVERS
 ```
-sudo git config --global --add safe.directory /home/nodeuser/rpc-load-balancer
-```
 
-You should also configure the GitHub user under root (use your info):
+This configuration ensures the best performance by using only the top 3 nodes.
 
-```
-sudo git config --global user.email "8675309+someuser@users.noreply.github.com"
-sudo git config --global user.name "someuser"
-```
+---
 
-Cronjob:
+## Troubleshooting
 
-```bash
-# RPC Load Balancer Update
-(crontab -l; echo "*/15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make cron >> cron.log 2>&1") | crontab -
-```
+- **Invalid `nginx` Configuration:**
+  - Run `sudo nginx -t` to check for syntax errors.
+  - Fix reported issues and reload the service using `sudo systemctl reload nginx`.
+
+- **Cron Job Issues:**
+  - Verify cron logs (`cron.log`) for errors.
+  - Ensure paths and environment variables are correctly set.
+
+- **Node Synchronization Problems:**
+  - Ensure nodes listed in `endpoints.txt` are operational.
+  - Adjust `BALANCER_TOLERANCE` for stricter or looser performance criteria.
+
+---
+
+For additional help, submit issues or feature requests via GitHub.
