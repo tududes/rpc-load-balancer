@@ -90,7 +90,6 @@ update:
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
 	for i in $$(seq 1 $$NUM_UPSTREAMS); do \
 		curl -s -k https://${RPC_LB_DOMAIN}/block; \
-		sleep 1; \
 	done
 
 
