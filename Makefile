@@ -20,12 +20,12 @@ ifndef RPC_LB_SITE_FILE
 RPC_LB_SITE_FILE=rpc-load-balancer
 endif
 
+ifndef RPC_LB_PORT
+RPC_LB_PORT=26657
+endif
+
 
 define RPC_LB_SITE_CONTENTS
-upstream fullnodes {
-	server 127.0.0.1:443;
-}
-
 server {
 	listen 80;
 	server_name ${RPC_LB_DOMAIN};
@@ -40,25 +40,36 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 
 	location / {
-		proxy_pass https://fullnodes;
-		proxy_intercept_errors on;
-		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
+		# proxy_pass https://fullnodes;
+		# proxy_intercept_errors on;
+		# proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
-		proxy_connect_timeout 1s; # Reduce connection timeout
-		proxy_read_timeout 120s;   # Reduce read timeout
-		proxy_send_timeout 5s;   # Reduce send timeout
+		# proxy_connect_timeout 1s; # Reduce connection timeout
+		# proxy_read_timeout 120s;   # Reduce read timeout
+		# proxy_send_timeout 5s;   # Reduce send timeout
 
-		proxy_set_header Host $$proxy_host;
-		proxy_set_header X-Real-IP $$remote_addr;        
-		proxy_set_header Upgrade $$http_upgrade;
-		proxy_set_header Connection "upgrade";
+		# proxy_set_header Host $$proxy_host;
+		# proxy_set_header X-Real-IP $$remote_addr;        
+		# proxy_set_header Upgrade $$http_upgrade;
+		# proxy_set_header Connection "upgrade";
 		
-		add_header Access-Control-Allow-Origin *;
-		add_header Access-Control-Max-Age 3600;
-		add_header Access-Control-Expose-Headers Content-Length;
+		# add_header Access-Control-Allow-Origin *;
+		# add_header Access-Control-Max-Age 3600;
+		# add_header Access-Control-Expose-Headers Content-Length;
 		
-		proxy_http_version 1.1;
-		proxy_ssl_verify off;
+		# proxy_http_version 1.1;
+		# proxy_ssl_verify off;
+
+		set $upstream "";
+		rewrite_by_lua '
+				local upstreams = {
+						"http://127.0.0.1:${RPC_LB_PORT}"
+				}
+				ngx.var.upstream = upstreams[ math.random( #upstreams ) ] 
+		';
+		proxy_pass $upstream;
+
+
 	}
 }
 endef
