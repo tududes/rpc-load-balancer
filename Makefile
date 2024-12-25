@@ -35,21 +35,12 @@ server {
 server {
 	listen 443 ssl http2;
 	server_name ${RPC_LB_DOMAIN};
-	
+
 	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
-	
+
 	location / {
 		proxy_pass https://fullnodes;
-		add_header Access-Control-Allow-Origin *;
-        add_header Access-Control-Max-Age 3600;
-        add_header Access-Control-Expose-Headers Content-Length;
-		proxy_set_header Host $$host;
-		proxy_set_header X-Real-IP $$remote_addr;        
-		proxy_http_version 1.1;
-        proxy_set_header Upgrade $$http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_ssl_verify off;
 	}
 }
 endef
