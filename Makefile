@@ -38,7 +38,7 @@ server {
 	return 301 https://$$host$$request_uri;
 }
 
-map_hash_max_size 262144;
+#map_hash_max_size 262144;
 map_hash_bucket_size 262144;
 server {
 	listen 443 ssl http2;
