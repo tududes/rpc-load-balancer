@@ -57,11 +57,6 @@ server {
 		# Remove conflicting Access-Control-Allow-Origin headers from upstream
 		proxy_hide_header Access-Control-Allow-Origin;
 
-		# Dynamically set Access-Control-Allow-Origin based on the Origin header
-		if ($$http_origin ~* ^https?://(.*\.namada\.tududes\.com)$$) {
-			add_header Access-Control-Allow-Origin * always;
-		}
-
 		# Set additional CORS headers
 		add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 		add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
