@@ -42,7 +42,7 @@ server {
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 
 	location / {
-		proxy_pass http://to_proxy_servers;
+		proxy_pass https://to_proxy_servers;
 		proxy_intercept_errors on;
 		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
