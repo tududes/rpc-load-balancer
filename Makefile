@@ -42,7 +42,7 @@ server {
 	location / {
 		proxy_pass https://fullnodes;
 		proxy_intercept_errors on;
-		proxy_next_upstream error timeout;
+		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
 		proxy_connect_timeout 1s; # Reduce connection timeout
 		proxy_read_timeout 120s;   # Reduce read timeout
@@ -93,7 +93,6 @@ update:
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
 	for i in $$(seq 1 $$NUM_UPSTREAMS); do \
 		curl -s -k https://${RPC_LB_DOMAIN}/block; \
-		sleep 1; \
 	done
 
 
