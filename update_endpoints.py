@@ -13,6 +13,7 @@ dotenv.load_dotenv()
 balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 7)
 chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
 rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
+local_rpc_port = os.getenv("LOCAL_RPC_PORT", 26657)
 nginx_config = sys.argv[1]
 
 
@@ -65,11 +66,11 @@ for endpoint in endpoints:
     if len(endpoint) > 0:
         try:
             
-            # If the domain is local, swap to 127.0.0.1:26657
+            # If the domain is local, swap to 127.0.0.1:local_rpc_port
             domain = endpoint.split("//")[1].split("/")[0]  # Extract domain from endpoint
             if is_domain_local(domain):
-                # if localhost port 26657 is open, use it
-                local_endpoint = "http://127.0.0.1:26657/"
+                # if localhost port local_rpc_port is open, use it
+                local_endpoint = f"http://127.0.0.1:{local_rpc_port}/block"
                 request = requests.get(local_endpoint, timeout=1)
                 if request.status_code == 200:
                     endpoint = local_endpoint
@@ -115,7 +116,22 @@ end_index = content.index("}\n", start_index) + 1
 
 # Replace lines with top endpoints
 new_lines = ["upstream fullnodes {\n"] + [f"    server {endpoint.split('//')[1].split('/')[0]}:443;\n" for endpoint in top_endpoints] + ["}\n"]
+
+new_lines = ["upstream fullnodes {\n"]
+for endpoint in top_endpoints:
+    try:
+        # Extract hostname and port
+        host_port = endpoint.split("//")[1].split("/")[0]
+        if ":" not in host_port:
+            # Add default port if not specified
+            host_port += ":443"
+        new_lines.append(f"    server {host_port};\n")
+    except IndexError:
+        raise ValueError(f"Invalid endpoint format: {endpoint}")
+new_lines.append("}\n")
+
 content[start_index:end_index] = new_lines
+
 
 # Write back to the file
 with open(nginx_config, "w") as f:
