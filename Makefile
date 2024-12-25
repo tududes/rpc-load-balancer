@@ -59,15 +59,6 @@ server {
 		add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 		add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
 		add_header Access-Control-Allow-Credentials true always;
-
-		# Handle preflight OPTIONS requests
-		if ($$request_method = OPTIONS) {
-			add_header Access-Control-Allow-Origin $$http_origin;
-			add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH";
-			add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With";
-			add_header Access-Control-Allow-Credentials true;
-			return 204;
-		}
 		
 		proxy_http_version 1.1;
 		proxy_ssl_verify off;
