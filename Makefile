@@ -34,6 +34,8 @@ server {
 	return 301 https://$$host$$request_uri;
 }
 
+map_hash_max_size 262144;
+map_hash_bucket_size 262144;
 server {
 	listen 443 ssl http2;
 	server_name ${RPC_LB_DOMAIN};
@@ -41,8 +43,6 @@ server {
 	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 	
-	map_hash_max_size 262144;
-	map_hash_bucket_size 262144;
 
 	location / {
 		proxy_pass https://to_proxy_servers;
