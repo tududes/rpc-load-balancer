@@ -22,8 +22,10 @@ endif
 
 
 define RPC_LB_SITE_CONTENTS
+#BEGIN_PROXY_SERVERS
+#END_PROXY_SERVERS
 upstream fullnodes {
-	server 127.0.0.1:443;
+	server 127.0.0.1:30001;
 }
 
 server {

@@ -157,34 +157,45 @@ with open(nginx_config, "r") as f:
 start_index = nginx_cfg_content.index("upstream fullnodes {\n")
 end_index = nginx_cfg_content.index("}\n", start_index) + 1
 
+start_proxy_index = nginx_cfg_content.index("#BEGIN_PROXY_SERVERS\n")
+end_proxy_index = nginx_cfg_content.index("#END_PROXY_SERVERS\n", start_proxy_index) + 1
+
 # Replace lines with top endpoints
-new_lines = ["upstream fullnodes {\n"]
 port_start = 30000  # Starting port for localhost upstream servers
+server_port_entries = ["upstream fullnodes {\n"]
+server_block_entries = ["#BEGIN_PROXY_SERVERS\n"]
 upstream_ports = []
 
 for idx, endpoint in enumerate(top_endpoints, start=1):
     host_port = endpoint.split("//")[1].split("/")[0]
-    hostname = host_port.split(":")[0]
+    host = host_port.split(":")[0]
+    port = host_port.split(":")[1] or "443"
+    
     new_port = port_start + idx
     upstream_ports.append(new_port)
     
-    new_lines.append(f"    server 127.0.0.1:{new_port};\n")
+    server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
+    
     server_block = (
         f"server {{\n"
         f"    listen      {new_port} default_server;\n"
         f"    server_name {new_port}.local;\n"
         f"    location / {{\n"
         f"        proxy_pass       https://{host_port};\n"
-        f"        proxy_set_header Host {hostname};\n"
+        f"        proxy_set_header Host {host};\n"
         f"    }}\n"
         f"}}\n"
     )
-    new_lines.append(server_block)
+    server_block_entries.append(server_block)
 
-new_lines.append("}\n")
+server_port_entries.append("}\n")
+server_block_entries.append("#END_PROXY_SERVERS\n")
 
 # Replace the old upstream block with the new configuration
-nginx_cfg_content[start_index:end_index] = new_lines
+nginx_cfg_content[start_index:end_index] = server_port_entries
+
+# Replace the old proxy server block with the new configuration
+nginx_cfg_content[start_proxy_index:end_proxy_index] = server_block_entries
 
 # Write back to the file
 with open(nginx_config, "w") as f:
