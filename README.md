@@ -1,7 +1,7 @@
 
 # RPC Load Balancer Setup
 
-This repository provides tools for setting up a dynamic RPC load balancer using `nginx`.
+This repository provides tools for automated testing and setting up a dynamic RPC load balancer using `nginx`.
 
 ---
 
@@ -12,8 +12,8 @@ The `update_endpoints.py` script automates the management of RPC fullnodes by dy
 ### How It Works:
 1. Reads fullnode entries from `endpoints.txt`.
 2. Fetches remote `ledger_version` to assess node health.
-3. Selects the top 3 nodes based on performance.
-4. Configures `nginx` with a unique proxy setup for each selected node.
+3. Selects the top nodes based on a tolerance within top chain block height.
+4. Configures `nginx` with a unique proxy setup for all qualifying nodes.
 
 ---
 
@@ -63,13 +63,8 @@ The setup can be customized using the following environment variables:
 5. Automate updates:
    - Add a cron job to periodically update the load balancer:
      ```bash
-     sudo crontab -e
-     ```
-
-   - Add the following entry (adjust the path as necessary):
-     ```bash
      # RPC Load Balancer Update
-     */15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make cron >> cron.log 2>&1
+     (crontab -l; echo "*/15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make cron >> cron.log 2>&1) | crontab -
      ```
 
 ---
@@ -117,7 +112,7 @@ server {
 #END_PROXY_SERVERS
 ```
 
-This configuration ensures the best performance by using only the top 3 nodes.
+This configuration ensures the best performance by qualifying and testing nodes.
 
 ---
 
