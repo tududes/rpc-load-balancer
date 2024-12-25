@@ -54,9 +54,9 @@ server {
 		# proxy_set_header Upgrade $$http_upgrade;
 		# proxy_set_header Connection "upgrade";
 		
-		add_header Access-Control-Allow-Origin *;
-		add_header Access-Control-Max-Age 3600;
-		add_header Access-Control-Expose-Headers Content-Length;
+		# add_header Access-Control-Allow-Origin *;
+		# add_header Access-Control-Max-Age 3600;
+		# add_header Access-Control-Expose-Headers Content-Length;
 		
 		# proxy_http_version 1.1;
 		# proxy_ssl_verify off;

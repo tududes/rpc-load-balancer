@@ -64,7 +64,7 @@ The setup can be customized using the following environment variables:
    - Add a cron job to periodically update the load balancer:
      ```bash
      # RPC Load Balancer Update
-     (crontab -l; echo "*/15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make cron >> cron.log 2>&1") | crontab -
+     (crontab -l; echo "*/15 * * * * cd $HOME/rpc-load-balancer && REPO_PATH=$HOME/rpc-load-balancer make update >> cron.log 2>&1") | crontab -
      ```
 
 ---
