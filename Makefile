@@ -41,6 +41,11 @@ server {
 
 	location / {
 		proxy_pass https://fullnodes;
+		proxy_next_upstream error timeout http_502 http_503 http_504;
+    	
+		proxy_connect_timeout 1s; # Reduce connection timeout
+        proxy_read_timeout 10s;   # Reduce read timeout
+        proxy_send_timeout 10s;   # Reduce send timeout
 	}
 }
 endef
