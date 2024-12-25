@@ -59,7 +59,7 @@ server {
 
 		# Dynamically set Access-Control-Allow-Origin based on the Origin header
 		if ($$http_origin ~* ^https?://(.*\.namada\.tududes\.com)$$) {
-			add_header Access-Control-Allow-Origin $$http_origin always;
+			add_header Access-Control-Allow-Origin * always;
 		}
 
 		# Set additional CORS headers
@@ -69,7 +69,7 @@ server {
 
 		# Handle preflight OPTIONS requests
 		if ($$request_method = OPTIONS) {
-			add_header Access-Control-Allow-Origin $$http_origin always;
+			add_header Access-Control-Allow-Origin * always;
 			add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 			add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
 			add_header Access-Control-Allow-Credentials true always;
