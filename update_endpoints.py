@@ -2,7 +2,8 @@ import sys
 import os
 import dotenv
 import requests
-
+import socket
+import subprocess
 
 
 # Tolerance of max height: fixed count integer
@@ -12,9 +13,32 @@ dotenv.load_dotenv()
 balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 7)
 chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
 rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
-
-#nginx_config = "/etc/nginx/sites-available/rpc-load-balancer"
 nginx_config = sys.argv[1]
+
+
+def get_local_ips():
+    """Retrieve all local IP addresses."""
+    try:
+        result = subprocess.run(["hostname", "-I"], stdout=subprocess.PIPE, text=True)
+        return result.stdout.strip().split()
+    except Exception as e:
+        print(f"Error retrieving local IPs: {e}")
+        return []
+
+def resolve_domain(domain):
+    """Resolve the domain to an IP address."""
+    try:
+        return socket.gethostbyname(domain)
+    except socket.gaierror as e:
+        print(f"Error resolving domain {domain}: {e}")
+        return None
+
+def is_domain_local(domain):
+    """Check if the domain is hosted on the local machine."""
+    local_ips = get_local_ips()
+    domain_ip = resolve_domain(domain)
+    return domain_ip in local_ips
+
 
 # Read endpoints from the adjacent file
 with open("endpoints.txt", "r") as f:
@@ -40,6 +64,18 @@ ledger_versions = {}
 for endpoint in endpoints:
     if len(endpoint) > 0:
         try:
+            
+            # If the domain is local, swap to 127.0.0.1:26657
+            domain = endpoint.split("//")[1].split("/")[0]  # Extract domain from endpoint
+            if is_domain_local(domain):
+                # if localhost port 26657 is open, use it
+                local_endpoint = "http://127.0.0.1:26657/"
+                request = requests.get(local_endpoint, timeout=1)
+                if request.status_code == 200:
+                    endpoint = local_endpoint
+                else:
+                    continue
+        
             # try the directory endpoint first
             response = requests.get(f"{endpoint}/", timeout=1)
             data = response.text
