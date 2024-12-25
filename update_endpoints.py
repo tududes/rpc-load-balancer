@@ -179,12 +179,12 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     
     server_block = (
         f"server {{\n"
-        f"    listen      {new_port} default_server;\n"
-        f"    server_name {new_port}.local;\n"
-        f"    location / {{\n"
-        f"        proxy_pass       https://{host}:{port};\n"
-        f"        proxy_set_header Host {host};\n"
-        f"    }}\n"
+        f"  listen      {new_port} default_server;\n"
+        f"  server_name {new_port}.local;\n"
+        f"  location / {{\n"
+        f"      proxy_pass       https://{host}:{port};\n"
+        f"      proxy_set_header Host {host};\n"
+        f"  }}\n"
         f"}}\n"
     )
     server_block_entries.append(server_block)
