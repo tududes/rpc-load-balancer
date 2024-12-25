@@ -159,6 +159,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
         f"  location / {{\n"
         f"      proxy_pass       https://{host}:{port};\n"
         f"      proxy_set_header Host {host};\n"
+        f"      proxy_hide_header Access-Control-Allow-Origin;\n"
         # f"      proxy_set_header X-Real-IP $remote_addr;\n"
         # f"      proxy_set_header Upgrade $http_upgrade;\n"
         # f"      proxy_set_header Connection 'upgrade';\n"
