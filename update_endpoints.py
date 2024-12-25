@@ -170,7 +170,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     host_port = endpoint.split("//")[1].split("/")[0]
     hp_split = host_port.split(":")
     host = hp_split[0]
-    port = hp_split[1] or "443"
+    port = hp_split[1] if len(hp_split) > 1 else "443"  # Default to 443 if no port is specified
     
     new_port = port_start + idx
     upstream_ports.append(new_port)
