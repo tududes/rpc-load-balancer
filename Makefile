@@ -56,6 +56,7 @@ server {
 
 		# Ensure the CORS headers are set for all requests
 		#add_header Access-Control-Allow-Origin $$http_origin always;
+		proxy_set_header Access-Control-Allow-Origin *;
 		add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 		add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
 		add_header Access-Control-Allow-Credentials true always;
