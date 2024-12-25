@@ -27,7 +27,7 @@ The setup can be customized using the following environment variables:
 | `GIT_REPO`           | Repository name.                                             | `rpc-load-balancer`            |
 | `REPO_PATH`          | Path to the repository.                                      | `~/${GIT_REPO}`                |
 | `RPC_LB_DOMAIN`      | Domain for the RPC load balancer.                            | `namada-rpc.tududes.com`       |
-| `BALANCER_TOLERANCE` | Maximum difference in ledger height for eligible fullnodes.  | `7`                            |
+| `BALANCER_TOLERANCE` | Maximum difference in ledger height for eligible fullnodes.  | `10`                            |
 | `CHAIN_ID`           | Chain ID to validate fullnode compatibility.                 | `namada.5f5de2dd1b88cba30586420` |
 | `LOCAL_RPC_PORT`     | Port for local RPC service when applicable.                  | `26657`                        |
 
