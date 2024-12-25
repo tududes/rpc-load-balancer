@@ -47,14 +47,16 @@ endef
 export RPC_LB_SITE_CONTENTS
 
 
-install: rpc-load-balancer
+install: rpc-load-balancer do-install update
+
+
+do-install:
 	sudo apt install -y python3 nginx nginx-common nginx-full
 	sudo ln -sf /etc/nginx/sites-available/${RPC_LB_SITE_FILE} /etc/nginx/sites-enabled/${RPC_LB_SITE_FILE}
 	sudo apt install certbot python3-certbot-nginx -y
 	sudo certbot certonly --manual --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory --domain ${RPC_LB_DOMAIN}
 #	sudo certbot --nginx -d ${RPC_LB_DOMAIN} --register-unsafely-without-email --agree-tos
 	sudo systemctl reload nginx
-
 
 pull:
 	cd ${REPO_PATH} && git pull
