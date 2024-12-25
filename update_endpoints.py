@@ -40,6 +40,13 @@ ledger_versions = {}
 for endpoint in endpoints:
     if len(endpoint) > 0:
         try:
+            # try the directory endpoint first
+            response = requests.get(f"{endpoint}/", timeout=1)
+            data = response.text
+            if 'endpoints' not in data:
+                continue
+
+            # get info from the block endpoint
             response = requests.get(f"{endpoint}/block", timeout=1)
             data = response.json()
             rpc_chain_id = data.get('result', {}).get('block', {}).get('header', {}).get('chain_id', '')
