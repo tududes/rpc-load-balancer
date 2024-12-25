@@ -154,7 +154,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     # add_header Access-Control-Expose-Headers Content-Length;
     server_block = (
         f"server {{\n"
-        f"	listen      {new_port} default_server http2;\n"
+        f"	listen      {new_port} default_server;\n"
         f"	server_name {new_port}.local;\n"
         f"	location / {{\n"
         f"		proxy_pass https://{host}:{port};\n"
