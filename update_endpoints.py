@@ -14,6 +14,7 @@ balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 10)
 chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
 rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
 local_rpc_port = os.getenv("LOCAL_RPC_PORT", 26657)
+rpc_lb_domain = os.getenv("RPC_LB_DOMAIN", "namada-rpc.tududes.com")
 nginx_config = sys.argv[1]
 
 
@@ -154,8 +155,10 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     # add_header Access-Control-Expose-Headers Content-Length;
     server_block = (
         f"server {{\n"
-        f"	listen      {new_port} default_server;\n"
+        f"	listen      {new_port} ssl http2;\n"
         f"	server_name {new_port}.local;\n"
+        f"	ssl_certificate /etc/letsencrypt/live/{rpc_lb_domain}/fullchain.pem;\n"
+        f"	ssl_certificate_key /etc/letsencrypt/live/{rpc_lb_domain}/privkey.pem;\n"
         f"	location / {{\n"
         f"		proxy_pass https://{host}:{port};\n"
         f"		proxy_set_header Host {host};\n"
