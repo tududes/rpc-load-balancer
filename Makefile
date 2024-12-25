@@ -53,16 +53,16 @@ server {
 		proxy_set_header X-Real-IP $$remote_addr;        
 		proxy_set_header Upgrade $$http_upgrade;
 		proxy_set_header Connection "upgrade";
-		
+
 		# Ensure the CORS headers are set for all requests
-		add_header Access-Control-Allow-Origin $http_origin always;
+		add_header Access-Control-Allow-Origin $$http_origin always;
 		add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 		add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
 		add_header Access-Control-Allow-Credentials true always;
 
 		# Handle preflight OPTIONS requests
-		if ($request_method = OPTIONS) {
-			add_header Access-Control-Allow-Origin $http_origin;
+		if ($$request_method = OPTIONS) {
+			add_header Access-Control-Allow-Origin $$http_origin;
 			add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH";
 			add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With";
 			add_header Access-Control-Allow-Credentials true;
