@@ -95,6 +95,7 @@ for endpoint in endpoints:
                 if rpc_chain_id == chain_id:
                     ledger_version = int(data.get('result', {}).get('block', {}).get('header', {}).get('height', 0))
                     if isinstance(ledger_version, int) and ledger_version > 0:  # Ensure ledger_version is an integer
+                        print(f"Endpoint {endpoint} has ledger_version {ledger_version} and chain_id {rpc_chain_id}")
                         ledger_versions[endpoint] = ledger_version
             except Exception as e:
                 print(f"Error fetching data from {endpoint}: {e}")
