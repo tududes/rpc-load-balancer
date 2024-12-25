@@ -23,11 +23,7 @@ endif
 
 define RPC_LB_SITE_CONTENTS
 #BEGIN_PROXY_SERVERS
-map $$upstream_addr $$custom_host {
-	${RPC_LB_DOMAIN} ${RPC_LB_DOMAIN};
-}
 #END_PROXY_SERVERS
-
 upstream to_proxy_servers {
 	server 127.0.0.1:30001;
 }
@@ -44,17 +40,15 @@ server {
 
 	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
-	
 
 	location / {
 		proxy_pass https://to_proxy_servers;
-		proxy_set_header Host $$custom_host;
 		proxy_intercept_errors on;
 		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
-		# proxy_connect_timeout 3s; # Reduce connection timeout
-		# proxy_read_timeout 120s;   # Reduce read timeout
-		# proxy_send_timeout 10s;   # Reduce send timeout
+		proxy_connect_timeout 3s; # Reduce connection timeout
+		proxy_read_timeout 120s;   # Reduce read timeout
+		proxy_send_timeout 10s;   # Reduce send timeout
 
 		proxy_set_header X-Real-IP $$remote_addr;
 		proxy_set_header Upgrade $$http_upgrade;
