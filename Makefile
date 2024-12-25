@@ -23,7 +23,11 @@ endif
 
 define RPC_LB_SITE_CONTENTS
 #BEGIN_PROXY_SERVERS
+map $$upstream_addr $$custom_host {
+	${RPC_LB_DOMAIN} ${RPC_LB_DOMAIN};
+}
 #END_PROXY_SERVERS
+
 upstream to_proxy_servers {
 	server 127.0.0.1:30001;
 }
