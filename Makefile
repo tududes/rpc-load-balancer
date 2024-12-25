@@ -48,7 +48,7 @@ server {
 		proxy_read_timeout 120s;   # Reduce read timeout
 		proxy_send_timeout 5s;   # Reduce send timeout
 
-		proxy_set_header Host $$host;
+		proxy_set_header Host $$proxy_host;
 		proxy_set_header X-Real-IP $$remote_addr;        
 		proxy_set_header Upgrade $$http_upgrade;
 		proxy_set_header Connection "upgrade";
