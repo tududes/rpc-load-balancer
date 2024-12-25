@@ -10,7 +10,7 @@ import subprocess
 
 # Load environment variables
 dotenv.load_dotenv()
-balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 7)
+balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 10)
 chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
 rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
 local_rpc_port = os.getenv("LOCAL_RPC_PORT", 26657)
