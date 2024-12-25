@@ -156,7 +156,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     server_block = (
         f"server {{\n"
         f"	listen      {new_port} ssl http2;\n"
-        f"	server_name {new_port}.local;\n"
+        #f"	server_name {new_port}.local;\n"
         f"	ssl_certificate /etc/letsencrypt/live/{rpc_lb_domain}/fullchain.pem;\n"
         f"	ssl_certificate_key /etc/letsencrypt/live/{rpc_lb_domain}/privkey.pem;\n"
         f"	location / {{\n"
