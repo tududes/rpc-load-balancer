@@ -62,14 +62,14 @@ server {
 		# Set additional CORS headers
 		add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 		add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
-		add_header Access-Control-Allow-Credentials true always;
+		#add_header Access-Control-Allow-Credentials true always;
 
 		# Handle preflight OPTIONS requests
 		if ($$request_method = OPTIONS) {
 			add_header Access-Control-Allow-Origin * always;
 			add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 			add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
-			add_header Access-Control-Allow-Credentials true always;
+			#add_header Access-Control-Allow-Credentials true always;
 			return 204;
 		}
 
