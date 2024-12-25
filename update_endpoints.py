@@ -115,8 +115,6 @@ start_index = content.index("upstream fullnodes {\n")
 end_index = content.index("}\n", start_index) + 1
 
 # Replace lines with top endpoints
-new_lines = ["upstream fullnodes {\n"] + [f"    server {endpoint.split('//')[1].split('/')[0]}:443;\n" for endpoint in top_endpoints] + ["}\n"]
-
 new_lines = ["upstream fullnodes {\n"]
 for endpoint in top_endpoints:
     try:
