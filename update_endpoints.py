@@ -149,6 +149,9 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     
     server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
     
+    # add_header Access-Control-Allow-Origin *;
+    # add_header Access-Control-Max-Age 3600;
+    # add_header Access-Control-Expose-Headers Content-Length;
     server_block = (
         f"server {{\n"
         f"  listen      {new_port} default_server;\n"
@@ -156,6 +159,14 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
         f"  location / {{\n"
         f"      proxy_pass       https://{host}:{port};\n"
         f"      proxy_set_header Host {host};\n"
+        f"      proxy_set_header X-Real-IP $remote_addr;\n"
+        f"      proxy_set_header Upgrade $http_upgrade;\n"
+        f"      proxy_set_header Connection 'upgrade';\n"
+        f"      add_header Access-Control-Allow-Origin *;\n"
+        f"      add_header Access-Control-Max-Age 3600;\n"
+        f"      add_header Access-Control-Expose-Headers Content-Length;\n"
+        f"      proxy_http_version 1.1;\n"
+        f"      proxy_ssl_verify off;\n"
         f"  }}\n"
         f"}}\n"
     )
