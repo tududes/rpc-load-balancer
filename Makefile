@@ -50,16 +50,16 @@ server {
 		proxy_read_timeout 120s;   # Reduce read timeout
 		proxy_send_timeout 10s;   # Reduce send timeout
 
-		proxy_set_header X-Real-IP $remote_addr;
-		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header X-Real-IP $$remote_addr;
+		proxy_set_header Upgrade $$http_upgrade;
 		proxy_set_header Connection "upgrade";
 
 		# Remove conflicting Access-Control-Allow-Origin headers from upstream
 		proxy_hide_header Access-Control-Allow-Origin;
 
 		# Dynamically set Access-Control-Allow-Origin based on the Origin header
-		if ($http_origin ~* ^https?://(.*\.namada\.tududes\.com)$) {
-			add_header Access-Control-Allow-Origin $http_origin always;
+		if ($$http_origin ~* ^https?://(.*\.namada\.tududes\.com)$$) {
+			add_header Access-Control-Allow-Origin $$http_origin always;
 		}
 
 		# Set additional CORS headers
@@ -68,8 +68,8 @@ server {
 		add_header Access-Control-Allow-Credentials true always;
 
 		# Handle preflight OPTIONS requests
-		if ($request_method = OPTIONS) {
-			add_header Access-Control-Allow-Origin $http_origin always;
+		if ($$request_method = OPTIONS) {
+			add_header Access-Control-Allow-Origin $$http_origin always;
 			add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
 			add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
 			add_header Access-Control-Allow-Credentials true always;
