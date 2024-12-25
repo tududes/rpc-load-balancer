@@ -116,39 +116,6 @@ top_endpoints = [
 ]
 
 
-
-
-# # Update Nginx configuration
-# with open(nginx_config, "r") as f:
-#     nginx_cfg_content = f.readlines()
-
-# # Identify the lines to replace
-# start_index = nginx_cfg_content.index("upstream fullnodes {\n")
-# end_index = nginx_cfg_content.index("}\n", start_index) + 1
-
-# # Replace lines with top endpoints
-# new_lines = ["upstream fullnodes {\n"]
-# for endpoint in top_endpoints:
-#     try:
-#         # Extract hostname and port
-#         host_port = endpoint.split("//")[1].split("/")[0]
-#         if ":" not in host_port:
-#             # Add default port if not specified
-#             host_port += ":443"
-#         new_lines.append(f"    server {host_port};\n")
-#     except IndexError:
-#         raise ValueError(f"Invalid endpoint format: {endpoint}")
-# new_lines.append("}\n")
-
-# nginx_cfg_content[start_index:end_index] = new_lines
-
-# # Write back to the file
-# with open(nginx_config, "w") as f:
-#     f.writelines(nginx_cfg_content)
-
-
-
-
 # Update Nginx configuration
 with open(nginx_config, "r") as f:
     nginx_cfg_content = f.readlines()
@@ -160,7 +127,7 @@ server_block_beg = "#BEGIN_PROXY_SERVERS\n"
 server_block_end = "#END_PROXY_SERVERS\n"
 
 start_index = nginx_cfg_content.index(server_port_beg)
-end_index = nginx_cfg_content.index("}\n", start_index) + 1
+end_index = nginx_cfg_content.index(server_port_end, start_index) + 1
 
 start_proxy_index = nginx_cfg_content.index(server_block_beg)
 end_proxy_index = nginx_cfg_content.index(server_block_end, start_proxy_index) + 1
@@ -194,6 +161,7 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
     )
     server_block_entries.append(server_block)
 
+# Add the closing lines
 server_port_entries.append(server_port_end)
 server_block_entries.append(server_block_end)
 
@@ -202,6 +170,7 @@ nginx_cfg_content[start_index:end_index] = server_port_entries
 
 # Replace the old proxy server block with the new configuration
 nginx_cfg_content[start_proxy_index:end_proxy_index] = server_block_entries
+
 
 # Write back to the file
 with open(nginx_config, "w") as f:
