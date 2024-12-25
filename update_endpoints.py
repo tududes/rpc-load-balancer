@@ -115,6 +115,40 @@ top_endpoints = [
     if (max_version - balancer_tolerance) <= version <= (max_version + balancer_tolerance)
 ]
 
+
+
+
+# # Update Nginx configuration
+# with open(nginx_config, "r") as f:
+#     nginx_cfg_content = f.readlines()
+
+# # Identify the lines to replace
+# start_index = nginx_cfg_content.index("upstream fullnodes {\n")
+# end_index = nginx_cfg_content.index("}\n", start_index) + 1
+
+# # Replace lines with top endpoints
+# new_lines = ["upstream fullnodes {\n"]
+# for endpoint in top_endpoints:
+#     try:
+#         # Extract hostname and port
+#         host_port = endpoint.split("//")[1].split("/")[0]
+#         if ":" not in host_port:
+#             # Add default port if not specified
+#             host_port += ":443"
+#         new_lines.append(f"    server {host_port};\n")
+#     except IndexError:
+#         raise ValueError(f"Invalid endpoint format: {endpoint}")
+# new_lines.append("}\n")
+
+# nginx_cfg_content[start_index:end_index] = new_lines
+
+# # Write back to the file
+# with open(nginx_config, "w") as f:
+#     f.writelines(nginx_cfg_content)
+
+
+
+
 # Update Nginx configuration
 with open(nginx_config, "r") as f:
     nginx_cfg_content = f.readlines()
@@ -125,20 +159,32 @@ end_index = nginx_cfg_content.index("}\n", start_index) + 1
 
 # Replace lines with top endpoints
 new_lines = ["upstream fullnodes {\n"]
-for endpoint in top_endpoints:
-    try:
-        # Extract hostname and port
-        host_port = endpoint.split("//")[1].split("/")[0]
-        if ":" not in host_port:
-            # Add default port if not specified
-            host_port += ":443"
-        new_lines.append(f"    server {host_port};\n")
-    except IndexError:
-        raise ValueError(f"Invalid endpoint format: {endpoint}")
+port_start = 30000  # Starting port for localhost upstream servers
+upstream_ports = []
+
+for idx, endpoint in enumerate(top_endpoints, start=1):
+    host_port = endpoint.split("//")[1].split("/")[0]
+    hostname = host_port.split(":")[0]
+    new_port = port_start + idx
+    upstream_ports.append(new_port)
+    
+    new_lines.append(f"    server 127.0.0.1:{new_port};\n")
+    server_block = (
+        f"server {{\n"
+        f"    listen      {new_port} default_server;\n"
+        f"    server_name {new_port}.local;\n"
+        f"    location / {{\n"
+        f"        proxy_pass       https://{host_port};\n"
+        f"        proxy_set_header Host {hostname};\n"
+        f"    }}\n"
+        f"}}\n"
+    )
+    new_lines.append(server_block)
+
 new_lines.append("}\n")
 
+# Replace the old upstream block with the new configuration
 nginx_cfg_content[start_index:end_index] = new_lines
-
 
 # Write back to the file
 with open(nginx_config, "w") as f:
