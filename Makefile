@@ -41,7 +41,8 @@ server {
 
 	location / {
 		proxy_pass https://fullnodes;
-		proxy_next_upstream error timeout http_502 http_503 http_504 http_405 http_404 http_403;
+		proxy_intercept_errors on;
+		proxy_next_upstream error timeout;
 
 		proxy_connect_timeout 1s; # Reduce connection timeout
 		proxy_read_timeout 120s;   # Reduce read timeout
