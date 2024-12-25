@@ -46,7 +46,7 @@ server {
 		proxy_connect_timeout 1s; # Reduce connection timeout
 		proxy_read_timeout 120s;   # Reduce read timeout
 		proxy_send_timeout 5s;   # Reduce send timeout
-		
+
 		add_header Access-Control-Allow-Origin *;
 		add_header Access-Control-Max-Age 3600;
 		add_header Access-Control-Expose-Headers Content-Length;
@@ -85,6 +85,13 @@ update:
 	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE} > ${REPO_PATH}/update.log 2>&1
 	sudo nginx -t
 	sudo systemctl reload nginx
+	sleep 5
+	# count the number of upstream servers and fire off curl requests to $RPC_LB_DOMAIN/block for each one
+	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
+	for i in $$(seq 1 $$NUM_UPSTREAMS); do \
+		curl -s -k https://${RPC_LB_DOMAIN}/block; \
+		sleep 1; \
+	done
 
 
 cron: pull update push
