@@ -40,9 +40,13 @@ server {
 
 	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
+	
+	map_hash_max_size 262144;
+	map_hash_bucket_size 262144;
 
 	location / {
 		proxy_pass https://to_proxy_servers;
+		proxy_set_header Host $$custom_host;
 		proxy_intercept_errors on;
 		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
