@@ -46,9 +46,9 @@ server {
 		proxy_intercept_errors on;
 		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
 
-		proxy_connect_timeout 3s; # Reduce connection timeout
-		proxy_read_timeout 120s;   # Reduce read timeout
-		proxy_send_timeout 10s;   # Reduce send timeout
+		# proxy_connect_timeout 3s; # Reduce connection timeout
+		# proxy_read_timeout 120s;   # Reduce read timeout
+		# proxy_send_timeout 10s;   # Reduce send timeout
 
 		proxy_set_header X-Real-IP $$remote_addr;
 		proxy_set_header Upgrade $$http_upgrade;
@@ -58,19 +58,11 @@ server {
 		proxy_hide_header Access-Control-Allow-Origin;
 
 		add_header Access-Control-Allow-Origin * always;
-
-		# Set additional CORS headers
-		#add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
-		#add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
-		#add_header Access-Control-Allow-Credentials true always;
 		add_header Access-Control-Expose-Headers Content-Length;
 
 		# Handle preflight OPTIONS requests
 		if ($$request_method = OPTIONS) {
 			add_header Access-Control-Allow-Origin * always;
-			#add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE, PATCH" always;
-			#add_header Access-Control-Allow-Headers "Authorization, Content-Type, X-Requested-With" always;
-			#add_header Access-Control-Allow-Credentials true always;
 			add_header Access-Control-Expose-Headers Content-Length;
 			return 204;
 		}
