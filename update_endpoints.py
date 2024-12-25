@@ -70,27 +70,35 @@ for endpoint in endpoints:
             domain = endpoint.split("//")[1].split("/")[0]  # Extract domain from endpoint
             if is_domain_local(domain):
                 # if localhost port local_rpc_port is open, use it
-                local_endpoint = f"http://127.0.0.1:{local_rpc_port}/block"
-                request = requests.get(local_endpoint, timeout=1)
+                local_endpoint = f"http://127.0.0.1:{local_rpc_port}/"
+                request = requests.get(f"{local_endpoint}/block", timeout=1)
                 if request.status_code == 200:
                     endpoint = local_endpoint
                 else:
                     continue
         
             # try the directory endpoint first
-            response = requests.get(f"{endpoint}/", timeout=1)
-            data = response.text
-            if 'endpoints' not in data:
+            try:
+                response = requests.get(f"{endpoint}/", timeout=1)
+                data = response.text
+                if 'endpoints' not in data:
+                    continue
+            except Exception as e:
+                print(f"Error fetching data from {endpoint}: {e}")
                 continue
-
+            
             # get info from the block endpoint
-            response = requests.get(f"{endpoint}/block", timeout=1)
-            data = response.json()
-            rpc_chain_id = data.get('result', {}).get('block', {}).get('header', {}).get('chain_id', '')
-            if rpc_chain_id == chain_id:
-                ledger_version = int(data.get('result', {}).get('block', {}).get('header', {}).get('height', 0))
-                if isinstance(ledger_version, int) and ledger_version > 0:  # Ensure ledger_version is an integer
-                    ledger_versions[endpoint] = ledger_version
+            try:
+                response = requests.get(f"{endpoint}/block", timeout=1)
+                data = response.json()
+                rpc_chain_id = data.get('result', {}).get('block', {}).get('header', {}).get('chain_id', '')
+                if rpc_chain_id == chain_id:
+                    ledger_version = int(data.get('result', {}).get('block', {}).get('header', {}).get('height', 0))
+                    if isinstance(ledger_version, int) and ledger_version > 0:  # Ensure ledger_version is an integer
+                        ledger_versions[endpoint] = ledger_version
+            except Exception as e:
+                print(f"Error fetching data from {endpoint}: {e}")
+                continue
         except Exception as e:
             print(f"Error fetching data from {endpoint}: {e}")
 
@@ -108,11 +116,11 @@ top_endpoints = [
 
 # Update Nginx configuration
 with open(nginx_config, "r") as f:
-    content = f.readlines()
+    nginx_cfg_content = f.readlines()
 
 # Identify the lines to replace
-start_index = content.index("upstream fullnodes {\n")
-end_index = content.index("}\n", start_index) + 1
+start_index = nginx_cfg_content.index("upstream fullnodes {\n")
+end_index = nginx_cfg_content.index("}\n", start_index) + 1
 
 # Replace lines with top endpoints
 new_lines = ["upstream fullnodes {\n"]
@@ -128,11 +136,11 @@ for endpoint in top_endpoints:
         raise ValueError(f"Invalid endpoint format: {endpoint}")
 new_lines.append("}\n")
 
-content[start_index:end_index] = new_lines
+nginx_cfg_content[start_index:end_index] = new_lines
 
 
 # Write back to the file
 with open(nginx_config, "w") as f:
-    f.writelines(content)
+    f.writelines(nginx_cfg_content)
 
 print("Nginx configuration updated!")
