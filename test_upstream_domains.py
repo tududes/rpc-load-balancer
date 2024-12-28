@@ -12,10 +12,13 @@ import shutil
 ####################################
 
 # The live NGINX config path (where your Makefile writes the final config)
-LIVE_CONFIG_PATH = sys.argv[1]
+STAGED_CONFIG_PATH = sys.argv[1]
+
+# Replace -staged with -live to get the live config path
+LIVE_CONFIG_PATH = STAGED_CONFIG_PATH.replace("-staged", "")
 
 # A temporary test config path
-TEST_CONFIG_PATH = f"{LIVE_CONFIG_PATH}-test"
+TEST_CONFIG_PATH = f"{STAGED_CONFIG_PATH}-single"
 
 # The domain used for test requests using basename of file
 TEST_SERVER_NAME = os.path.basename(TEST_CONFIG_PATH).split(".")[0]
@@ -190,7 +193,7 @@ def build_final_config(config_text, working_domains):
 
 def main():
     # 1) Read the live/original config
-    with open(LIVE_CONFIG_PATH, "r") as f:
+    with open(STAGED_CONFIG_PATH, "r") as f:
         original_cfg = f.readlines()
         
     # print(original_cfg)

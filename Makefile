@@ -106,11 +106,11 @@ push:
 	cd ${REPO_PATH} && git add -A && git commit -m "rpc health check" && git push 
 
 
-update-list:
-	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}
+update-list: rpc-load-balancer-staged
+	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}-staged
 
 test-list:
-	cd ${REPO_PATH} && sudo python3 test_upstream_domains.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}
+	cd ${REPO_PATH} && sudo python3 test_upstream_domains.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}-staged
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
 	for i in $$(seq 1 $$NUM_UPSTREAMS); do \
 		curl -s -k https://${RPC_LB_DOMAIN}/block; \
@@ -123,6 +123,11 @@ cron: pull update-list test-list push
 cron-nogit: update-list test-list
 	echo "Finished without git!"
 
+
+
+rpc-load-balancer-staged:
+	mkdir -p /etc/nginx/sites-available/
+	@echo "$$RPC_LB_SITE_CONTENTS" | sudo tee /etc/nginx/sites-available/${RPC_LB_SITE_FILE}-staged
 
 rpc-load-balancer:
 	mkdir -p /etc/nginx/sites-available/
