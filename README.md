@@ -7,7 +7,7 @@ This repository provides tools for automated testing and setting up a dynamic RP
 
 ## Overview
 
-The `update_endpoints.py` script automates the management of RPC fullnodes by dynamically updating the `nginx` configuration. This ensures only the top-performing nodes are used for proxying.
+The Makefile and accompanying scripts automate the testing of RPC fullnodes by dynamically updating the `nginx` configuration. This ensures only the top-performing nodes are used for proxying.
 
 ### How It Works:
 1. Reads fullnode entries from `endpoints.txt` and JSON endpoint and combines them.
