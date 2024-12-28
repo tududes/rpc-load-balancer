@@ -39,8 +39,9 @@ The setup can be customized using the following environment variables:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/tududes/rpc-load-balancer.git ~/rpc-load-balancer
-   cd ~/rpc-load-balancer
+   cd $HOME
+   git clone https://github.com/tududes/rpc-load-balancer -b namada-mainnet
+   cd $HOME/rpc-load-balancer
    ```
 
 2. Configure your environment variables:
