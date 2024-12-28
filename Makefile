@@ -62,6 +62,7 @@ server {
         # Pass headers
         proxy_set_header Host           $$rpc_upstream;
         proxy_set_header X-Real-IP      $$remote_addr;
+        proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
         proxy_set_header Upgrade        $$http_upgrade;
         proxy_set_header Connection     "upgrade";
 
@@ -69,14 +70,6 @@ server {
         proxy_hide_header Access-Control-Allow-Origin;
         add_header Access-Control-Allow-Origin * always;
         add_header Access-Control-Expose-Headers Content-Length;
-
-        # Remove the Access-Control-Allow-Methods and Access-Control-Allow-Headers lines
-        # per your request. Only respond with 204 on OPTIONS:
-        if ($$request_method = OPTIONS) {
-            add_header Access-Control-Allow-Origin   * always;
-            add_header Access-Control-Expose-Headers Content-Length;
-            return 204;
-        }
 
         proxy_http_version 1.1;
         proxy_ssl_verify off;
