@@ -171,14 +171,14 @@ def build_final_config(config_text, working_domains):
     
     if n == 1:
         # Only one domain => a single line: '* "domain";'
-        new_block_lines.append(f"\t*\t\"{working_domains[0]}\";")
+        new_block_lines.append(f"\t*\t\"{working_domains[0]}\";\n")
     else:
         fraction_str = f"{percentage:.2f}%"
         for d in working_domains[:-1]:
-            new_block_lines.append(f"\t{fraction_str}\t\"{d}\";")
+            new_block_lines.append(f"\t{fraction_str}\t\"{d}\";\n")
         
         # final domain with '*'
-        new_block_lines.append(f"\t*\t\"{working_domains[-1]}\";")
+        new_block_lines.append(f"\t*\t\"{working_domains[-1]}\";\n")
 
     new_block_lines.append(END_MARKER)
 
