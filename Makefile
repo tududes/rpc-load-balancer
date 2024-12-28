@@ -110,6 +110,7 @@ update-list: rpc-load-balancer-staged
 
 test-list:
 	cd ${REPO_PATH} && sudo python3 test_upstream_domains.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}-staged
+    curl -s -k https://${RPC_LB_DOMAIN}/block;
 
 test-endpoints:
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
