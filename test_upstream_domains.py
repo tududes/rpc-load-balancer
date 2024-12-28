@@ -249,8 +249,11 @@ def main():
         else:
             print(f"[FAIL] Domain {domain} did not respond with 2xx.")
 
-    # remove the test enabled site
+
+    # remove the test enabled site configs
     run_cmd(["sudo", "rm", "-f", TEST_CONFIG_PATH])
+    run_cmd(["sudo", "rm", "-f", TEST_CONFIG_PATH.replace("sites-available", "sites-enabled")])
+
     
     # 5) If no domains worked, restore backup and bail
     if not working:
