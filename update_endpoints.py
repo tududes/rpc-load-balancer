@@ -69,14 +69,14 @@ for endpoint in endpoints:
             
             # If the domain is local, swap to 127.0.0.1:local_rpc_port
             domain = endpoint.split("//")[1].split("/")[0]  # Extract domain from endpoint
-            if is_domain_local(domain):
-                # if localhost port local_rpc_port is open, use it
-                local_endpoint = f"http://127.0.0.1:{local_rpc_port}/"
-                request = requests.get(f"{local_endpoint}/block", timeout=1)
-                if request.status_code == 200:
-                    endpoint = local_endpoint
-                else:
-                    continue
+            # if is_domain_local(domain):
+            #     # if localhost port local_rpc_port is open, use it
+            #     local_endpoint = f"http://127.0.0.1:{local_rpc_port}/"
+            #     request = requests.get(f"{local_endpoint}/block", timeout=1)
+            #     if request.status_code == 200:
+            #         endpoint = local_endpoint
+            #     else:
+            #         continue
         
             # try the directory endpoint first
             try:
