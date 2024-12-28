@@ -22,10 +22,12 @@ endif
 
 
 define RPC_LB_SITE_CONTENTS
-#BEGIN_PROXY_SERVERS
-#END_PROXY_SERVERS
-upstream to_proxy_servers {
-	server 127.0.0.1:30001;
+split_clients "$${msec}$${remote_addr}$${remote_port}" $$rpc_upstream {
+#BEGIN_SPLIT_CLIENTS
+	99%	localhost:26657;
+# Always use DOT at end entry if you wonder why, read the SC code.
+	*	localhost:26657;
+#END_SPLIT_CLIENTS
 }
 
 server {
@@ -35,47 +37,57 @@ server {
 }
 
 server {
-	listen 443 ssl http2;
-	server_name ${RPC_LB_DOMAIN};
+    listen 443 ssl http2;
+    server_name ${RPC_LB_DOMAIN};
+    resolver 8.8.8.8;
 
-	ssl_certificate /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 
-	location / {
-		proxy_pass https://to_proxy_servers;
-		proxy_intercept_errors on;
-		proxy_next_upstream error timeout http_502 http_503 http_504 http_404 http_403;
+    location / {
+        # Pass to whichever upstream was chosen above
+        proxy_pass https://$$rpc_upstream;
 
-		proxy_connect_timeout 3s; # Reduce connection timeout
-		proxy_read_timeout 120s;   # Reduce read timeout
-		proxy_send_timeout 10s;   # Reduce send timeout
+        # Retry on error/timeouts
+        proxy_intercept_errors on;
+        proxy_next_upstream error timeout http_500 http_502 http_503 http_504 http_403 http_404;
+        proxy_next_upstream_tries 3;
+        proxy_next_upstream_timeout 10s;
 
-		proxy_set_header X-Real-IP $$remote_addr;
-		proxy_set_header Upgrade $$http_upgrade;
-		proxy_set_header Connection "upgrade";
+        # Timeouts
+        proxy_connect_timeout 3s;
+        proxy_read_timeout    120s;
+        proxy_send_timeout    10s;
 
-		# Remove conflicting Access-Control-Allow-Origin headers from upstream
-		proxy_hide_header Access-Control-Allow-Origin;
+        # Pass headers
+        proxy_set_header Host           $$rpc_upstream;
+        proxy_set_header X-Real-IP      $$remote_addr;
+        proxy_set_header Upgrade        $$http_upgrade;
+        proxy_set_header Connection     "upgrade";
 
-		add_header Access-Control-Allow-Origin * always;
-		add_header Access-Control-Expose-Headers Content-Length;
+        # CORS
+        proxy_hide_header Access-Control-Allow-Origin;
+        add_header Access-Control-Allow-Origin * always;
+        add_header Access-Control-Expose-Headers Content-Length;
 
-		# Handle preflight OPTIONS requests
-		if ($$request_method = OPTIONS) {
-			add_header Access-Control-Allow-Origin * always;
-			add_header Access-Control-Expose-Headers Content-Length;
-			return 204;
-		}
+        # Remove the Access-Control-Allow-Methods and Access-Control-Allow-Headers lines
+        # per your request. Only respond with 204 on OPTIONS:
+        if ($$request_method = OPTIONS) {
+            add_header Access-Control-Allow-Origin   * always;
+            add_header Access-Control-Expose-Headers Content-Length;
+            return 204;
+        }
 
-		proxy_http_version 1.1;
-		proxy_ssl_verify off;
-	}
+        proxy_http_version 1.1;
+        proxy_ssl_verify off;
+    }
 }
 endef
 export RPC_LB_SITE_CONTENTS
 
 
-install: rpc-load-balancer do-install update
+install: rpc-load-balancer do-install update-list test-list
+	echo "Finished!"
 
 
 do-install:
@@ -94,23 +106,21 @@ push:
 	cd ${REPO_PATH} && git add -A && git commit -m "rpc health check" && git push 
 
 
-update:
-	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE} > ${REPO_PATH}/update.log 2>&1
-	sudo nginx -t
-	sudo systemctl reload nginx
-	sleep 5
-	# count the number of upstream servers and fire off curl requests to $RPC_LB_DOMAIN/block for each one
+update-list:
+	cd ${REPO_PATH} && sudo python3 update_endpoints.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}
+
+test-list:
+	cd ${REPO_PATH} && sudo python3 test_upstream_domains.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
 	for i in $$(seq 1 $$NUM_UPSTREAMS); do \
 		curl -s -k https://${RPC_LB_DOMAIN}/block; \
 	done
 
-
-cron: pull update push
+cron: pull update-list test-list push
 	echo "Finished!"
 
 
-cron-nogit: update
+cron-nogit: update-list test-list
 	echo "Finished without git!"
 
 

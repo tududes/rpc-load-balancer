@@ -122,69 +122,42 @@ with open(nginx_config, "r") as f:
     nginx_cfg_content = f.readlines()
 
 # Identify the lines to replace
-server_port_beg = "upstream to_proxy_servers {\n"
-server_port_end = "}\n"
-server_block_beg = "#BEGIN_PROXY_SERVERS\n"
-server_block_end = "#END_PROXY_SERVERS\n"
+#server_port_beg = "upstream to_proxy_servers {\n"
+server_port_beg = "#BEGIN_SPLIT_CLIENTS\n"
+server_port_end = "#END_SPLIT_CLIENTS\n"
 
+# Find the start and end index of the block
 start_index = nginx_cfg_content.index(server_port_beg)
 end_index = nginx_cfg_content.index(server_port_end, start_index) + 1
-
-start_proxy_index = nginx_cfg_content.index(server_block_beg)
-end_proxy_index = nginx_cfg_content.index(server_block_end, start_proxy_index) + 1
 
 # Replace lines with top endpoints
 port_start = 30000  # Starting port for localhost upstream servers
 server_port_entries = [server_port_beg]
-server_block_entries = [server_block_beg]
-upstream_ports = []
 
+# determine the percentage for each server port entry
+count_endpoints = len(top_endpoints)
+percent_per_server = 100 / count_endpoints
+percent_per_server = round(percent_per_server, 2)
+
+i=0
 for idx, endpoint in enumerate(top_endpoints, start=1):
+    i += 1
     host_port = endpoint.split("//")[1].split("/")[0]
     hp_split = host_port.split(":")
     host = hp_split[0]
     port = hp_split[1] if len(hp_split) > 1 else "443"  # Default to 443 if no port is specified
-    
-    new_port = port_start + idx
-    upstream_ports.append(new_port)
-    
-    server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
-    
-    # add_header Access-Control-Allow-Origin *;
-    # add_header Access-Control-Max-Age 3600;
-    # add_header Access-Control-Expose-Headers Content-Length;
-    server_block = (
-        f"server {{\n"
-        f"	listen      {new_port} ssl http2;\n"
-        #f"	server_name {new_port}.local;\n"
-        f"	ssl_certificate /etc/letsencrypt/live/{rpc_lb_domain}/fullchain.pem;\n"
-        f"	ssl_certificate_key /etc/letsencrypt/live/{rpc_lb_domain}/privkey.pem;\n"
-        f"	location / {{\n"
-        f"		proxy_pass https://{host}:{port};\n"
-        f"		proxy_set_header Host {host}:{port};\n"
-        f"		proxy_set_header X-Real-IP $remote_addr;\n"
-        f"		proxy_set_header Upgrade $http_upgrade;\n"
-        f"		proxy_set_header Connection 'upgrade';\n"
-        # f"		proxy_hide_header Access-Control-Allow-Origin;\n"
-        # f"		add_header Access-Control-Allow-Origin *;\n"
-        f"		add_header Access-Control-Max-Age 3600;\n"
-        f"		add_header Access-Control-Expose-Headers Content-Length;\n"
-        f"		proxy_http_version 1.1;\n"
-        f"		proxy_ssl_verify off;\n"
-        f"	}}\n"
-        f"}}\n"
-    )
-    server_block_entries.append(server_block)
+        
+    #server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
+    if i < count_endpoints:
+        server_port_entries.append(f"	{percent_per_server}%	{host};\n")
+    else:
+        server_port_entries.append(f"	*	{host};\n")
 
 # Add the closing lines
 server_port_entries.append(server_port_end)
-server_block_entries.append(server_block_end)
 
 # Replace the old upstream block with the new configuration
 nginx_cfg_content[start_index:end_index] = server_port_entries
-
-# Replace the old proxy server block with the new configuration
-nginx_cfg_content[start_proxy_index:end_proxy_index] = server_block_entries
 
 
 # Write back to the file
