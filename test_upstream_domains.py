@@ -144,7 +144,7 @@ def build_config_for_single_domain(config_text, domain):
     config_text = [re.sub(r"server_name\s+[^;]+;", f"server_name {TEST_SERVER_NAME};", line) for line in config_text]
     
     # For any instance of rpc_upstream replace it with rpc_upstream_test
-    config_text = [re.sub(r"rpc_upstream", "rpc_upstream_test", line) for line in config_text]
+    config_text = [re.sub(r"rpc_upstream", TEST_SERVER_NAME, line) for line in config_text]
 
     return config_text
 
@@ -249,6 +249,9 @@ def main():
         else:
             print(f"[FAIL] Domain {domain} did not respond with 2xx.")
 
+    # remove the test enabled site
+    run_cmd(["sudo", "rm", "-f", TEST_CONFIG_PATH.replace("sites-available", "sites-enabled")])
+    
     # 5) If no domains worked, restore backup and bail
     if not working:
         print("[ERROR] No domains worked. Restoring backup and exiting.")

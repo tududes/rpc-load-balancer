@@ -157,6 +157,12 @@ server {
         add_header Access-Control-Allow-Origin * always;
         add_header Access-Control-Expose-Headers Content-Length;
 
+        if ($request_method = OPTIONS) {
+            add_header Access-Control-Allow-Origin   * always;
+            add_header Access-Control-Expose-Headers Content-Length;
+            return 204;
+        }
+
         proxy_http_version 1.1;
         proxy_ssl_verify off;
     }
