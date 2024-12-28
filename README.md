@@ -11,9 +11,9 @@ The `update_endpoints.py` script automates the management of RPC fullnodes by dy
 
 ### How It Works:
 1. Reads fullnode entries from `endpoints.txt` and JSON endpoint and combines them.
-2. Qualifies chain ID and fetches remote `ledger_version` to assess node health.
+2. Checks chain ID and fetches remote `ledger_version` to assess node health.
 3. Selects the top nodes based on a tolerance within top chain block height.
-4. Stages `nginx` with a unique proxy setup for all qualifying nodes.
+4. Stages `nginx` with a unique proxy setup for all passing nodes.
 5. Tests each node end to end to ensure proper functionality, removing defunct nodes.
 6. Updates the `nginx` configuration with the new proxy servers.
 
@@ -84,7 +84,7 @@ The setup can be customized using the following environment variables:
 
 ## Example Nginx Configuration
 
-Generated configuration includes the top three RPC fullnodes for proxying:
+Generated configuration includes only tested RPC fullnodes for proxying:
 
 ```nginx
 split_clients "${msec}${remote_addr}${remote_port}" $rpc_upstream {
@@ -170,7 +170,7 @@ server {
 }
 ```
 
-This configuration ensures the best performance by qualifying and testing nodes.
+This configuration ensures the best performance by testing nodes.
 
 ---
 
