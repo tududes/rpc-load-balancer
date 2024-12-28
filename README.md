@@ -192,3 +192,6 @@ This configuration ensures the best performance by testing nodes.
 ---
 
 For additional help, submit issues or feature requests via GitHub!
+
+# DISCLAIMER
+This repository serves as a tool to access a more reliable list of RPC endpoints. The code to accomplish this is provided as-is. No guarantees are made regarding the availability or performance of the listed nodes. Use at your own risk.
