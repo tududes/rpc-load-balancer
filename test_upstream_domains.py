@@ -106,9 +106,6 @@ def get_domains_from_config(config_text):
 
     # print(block_lines)
     # quit()
-
-    # Regex to match lines like: 
-    # ['\t2.7%\t127.0.0.1;\n', '\t2.7%\tnamada.liquify.com;\n', '\t2.7%\tnamada-rpc.mandragora.io;\n', '\t2.7%\tnamadam.powerstaking.tech;\n', '\t2.7%\tnamada-main.stakesystems.io;\n', '\t2.7%\trpc-namada.5elementsnodes.com;\n', '\t2.7%\tnamada-rpc.hadesguard.tech;\n', '\t2.7%\tnamada-mainnet-rpc.itrocket.net;\n', '\t2.7%\tnamada-rpc.sproutstake.space;\n', '\t2.7%\trpc.papadritta.com;\n', '\t2.7%\tnamada.rpc.decentrio.ventures;\n', '\t2.7%\trpc.namada.stakepool.dev.br;\n', '\t2.7%\trpc.namadascan.io;\n', '\t2.7%\tnamada-rpc.synergynodes.com;\n', '\t2.7%\tnamada-mainnet.rpc.l0vd.com;\n', '\t2.7%\tnamada.loserboy.xyz;\n', '\t2.7%\tnamada.itudou.xyz;\n', '\t2.7%\trpc.namada.validatus.com;\n', '\t2.7%\tnamada-rpc.0xcryptovestor.com;\n', '\t2.7%\tnamada-rpc.0xwave.com;\n', '\t2.7%\tnamada-mainnet-rpc.mellifera.network;\n', '\t2.7%\tnamada-rpc.max-02.xyz;\n', '\t2.7%\tnamada-mainnet-rpc.denodes.xyz;\n', '\t2.7%\tnamada.rpc.liveraven.net;\n', '\t2.7%\tnamada-rpc.palamar.io;\n', '\t2.7%\tnamada-rpc.validatorvn.com;\n', '\t2.7%\trpc.namada.stakeup.tech;\n', '\t2.7%\trpc.namada.citizenweb3.com;\n', '\t2.7%\tlightnode-rpc-mainnet-namada.grandvalleys.com;\n', '\t2.7%\tmainnet-namada-rpc.konsortech.xyz;\n', '\t2.7%\tnamada-rpc.contributiondao.com;\n', '\t2.7%\tnamada-mainnet-rpc.crouton.digital;\n', '\t2.7%\tnamada-rpc.emberstake.xyz;\n', '\t2.7%\trpc-1.namada.nodes.guru;\n', '\t2.7%\tnamada.tdrsys.com;\n', '\t2.7%\trpc-namada.architectnodes.com;\n', '\t*\tnamada-rpc.murphynode.net;\n', '#END_SPLIT_CLIENTS\n']
     
     pattern = re.compile(r'^\s*(?:\d+(?:\.\d+)?%|\*)\s+([^\s;]+);')
 
@@ -143,8 +140,8 @@ def build_config_for_single_domain(config_text, domain):
     # Find the server_name line and replace it
     config_text = [re.sub(r"server_name\s+[^;]+;", f"server_name {TEST_SERVER_NAME};", line) for line in config_text]
     
-    # For any instance of rpc_upstream replace it with rpc_upstream_test
-    config_text = [re.sub(r"rpc_upstream", TEST_SERVER_NAME.replace("-", "_"), line) for line in config_text]
+    # For any instance of osmosis_rpc_upstream replace it with osmosis_rpc_upstream_test
+    config_text = [re.sub(r"osmosis_rpc_upstream", TEST_SERVER_NAME.replace("-", "_"), line) for line in config_text]
 
     return config_text
 

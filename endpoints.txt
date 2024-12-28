@@ -1,4 +1,14 @@
-# TuDudes
-https://rpc.namada.tududes.com/
+# Osmosis.zone docs
+https://rpc.osmosis.zone
 
-# 
+# 1RPC
+https://1rpc.io/osmosis-rpc
+
+# Allnodes
+https://osmosis-rpc.publicnode.com
+
+# Chainroot
+https://osmosis-rpc.chainroot.io
+
+# Stakin
+https://osmosis.rpc.stakin-nodes.com

@@ -10,11 +10,11 @@ import subprocess
 
 # Load environment variables
 dotenv.load_dotenv()
-balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 10)
-chain_id = os.getenv("CHAIN_ID", "namada.5f5de2dd1b88cba30586420")
-rpc_list = os.getenv("RPC_LIST", "https://raw.githubusercontent.com/Luminara-Hub/namada-ecosystem/refs/heads/main/user-and-dev-tools/mainnet/rpc.json")
+balancer_tolerance = os.getenv("BALANCER_TOLERANCE", 30)
+chain_id = os.getenv("CHAIN_ID", "osmosis-1")
+rpc_list = os.getenv("RPC_LIST", "https://snapshots.kjnodes.com/_rpc/osmosis.json")
 local_rpc_port = os.getenv("LOCAL_RPC_PORT", 26657)
-rpc_lb_domain = os.getenv("RPC_LB_DOMAIN", "namada-rpc.tududes.com")
+rpc_lb_domain = os.getenv("RPC_LB_DOMAIN", "osmosis-rpc.tududes.com")
 nginx_config = sys.argv[1]
 
 
@@ -49,14 +49,17 @@ with open("endpoints.txt", "r") as f:
 try:
     response = requests.get(rpc_list, timeout=5)
     data = response.json()
-    for rpc in data:
-        if rpc['RPC Address'] not in endpoints:
-            endpoints.append(rpc['RPC Address'])
+    for key, value in data.items():
+        print(value)
+        # {'moniker': 'rpc-2.osmosis.nodes.guru', 'network': 'osmosis-1', 'tx_index': 'on', 'earliest_block_height': 23074631, 'latest_block_height': 26518126, 'voting_power': 0, 'is_validator': False, 'blocks_indexed': 3443495, 'catching_up': False, 'data_since': '2024-10-28T12:59:45.261114204Z'}
+        if value['network'] == chain_id:
+            endpoints.append(f"http://{key}")
     #print(data)
 except Exception as e:
     print(f"Error fetching data from {rpc_list}: {e}")
 
-#print(endpoints)
+print("Endpoints to check:")
+print(endpoints)
 #quit()
 
 
@@ -104,7 +107,8 @@ for endpoint in endpoints:
         except Exception as e:
             print(f"Error fetching data from {endpoint}: {e}")
 
-#print(ledger_versions)
+print("Ledger versions:")
+print(ledger_versions)
 #quit()
 
 # Find the highest ledger_version
@@ -131,7 +135,6 @@ start_index = nginx_cfg_content.index(server_port_beg)
 end_index = nginx_cfg_content.index(server_port_end, start_index) + 1
 
 # Replace lines with top endpoints
-port_start = 30000  # Starting port for localhost upstream servers
 server_port_entries = [server_port_beg]
 
 # determine the percentage for each server port entry
@@ -149,9 +152,9 @@ for idx, endpoint in enumerate(top_endpoints, start=1):
         
     #server_port_entries.append(f"    server 127.0.0.1:{new_port};\n")
     if i < count_endpoints:
-        server_port_entries.append(f"	{percent_per_server}%	{host};\n")
+        server_port_entries.append(f"	{percent_per_server}%	{host_port};\n")
     else:
-        server_port_entries.append(f"	*	{host};\n")
+        server_port_entries.append(f"	*	{host_port};\n")
 
 # Add the closing lines
 server_port_entries.append(server_port_end)

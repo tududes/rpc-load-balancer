@@ -13,16 +13,16 @@ REPO_PATH=~/${GIT_REPO}
 endif
 
 ifndef RPC_LB_DOMAIN
-RPC_LB_DOMAIN=namada-rpc.tududes.com
+RPC_LB_DOMAIN=osmosis-rpc.tududes.com
 endif
 
 ifndef RPC_LB_SITE_FILE
-RPC_LB_SITE_FILE=rpc-load-balancer
+RPC_LB_SITE_FILE=osmosis-rpc-load-balancer
 endif
 
 
 define RPC_LB_SITE_CONTENTS
-split_clients "$${msec}$${remote_addr}$${remote_port}" $$rpc_upstream {
+split_clients "$${msec}$${remote_addr}$${remote_port}" $$osmosis_rpc_upstream {
 #BEGIN_SPLIT_CLIENTS
 	99%	localhost:26657;
 # Always use DOT at end entry if you wonder why, read the SC code.
@@ -46,7 +46,7 @@ server {
 
     location / {
         # Pass to whichever upstream was chosen above
-        proxy_pass https://$$rpc_upstream;
+        proxy_pass http://$$osmosis_rpc_upstream;
 
         # Retry on error/timeouts
         proxy_intercept_errors on;
@@ -60,7 +60,7 @@ server {
         proxy_send_timeout    10s;
 
         # Pass headers
-        proxy_set_header Host           $$rpc_upstream;
+        proxy_set_header Host           $$osmosis_rpc_upstream;
         proxy_set_header X-Real-IP      $$remote_addr;
         proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
         proxy_set_header Upgrade        $$http_upgrade;
@@ -90,12 +90,20 @@ install: rpc-load-balancer do-install update-list test-list
 
 
 do-install:
+	sudo ufw allow 80/tcp
+	sudo ufw allow 443/tcp
+	sudo apt -y --only-upgrade install python3-urllib3
+	sudo python3 -m pip uninstall -y urllib3
+	sudo python3 -m pip install urllib3
+	sudo python3 -m pip install pyopenssl --upgrade
+	sudo python3 -m pip install certbot certbot-nginx --upgrade 
 	sudo apt install -y python3 nginx nginx-common nginx-full
 	sudo ln -sf /etc/nginx/sites-available/${RPC_LB_SITE_FILE} /etc/nginx/sites-enabled/${RPC_LB_SITE_FILE}
 	sudo apt install certbot python3-certbot-nginx -y
 	sudo certbot certonly --manual --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory --domain ${RPC_LB_DOMAIN}
 #	sudo certbot --nginx -d ${RPC_LB_DOMAIN} --register-unsafely-without-email --agree-tos
 	sudo systemctl reload nginx
+	sleep 5
 
 pull:
 	cd ${REPO_PATH} && git pull
