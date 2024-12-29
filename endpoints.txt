@@ -1,20 +1,69 @@
+### manually added
 # Osmosis.zone Endpoints
 grpc.osmosis.zone:443
 grpc-prod.osmosis.zone:443
-#grpc.archive.osmosis.zone:443
-
-# Lavender Five
-osmosis.lavenderfive.com:443
-osmosis-grpc.lavenderfive.com
-
-# Stakin Nodes
-osmosis.grpc.stakin-nodes.com:443
-
-# Validatus
-grpc.osmosis.validatus.com:443
+grpc.archive.osmosis.zone:443
 
 # Stake Systems
 osmosis.stakesystems.io:2083
 
 # Polkachu
 osmosis-grpc.polkachu.com:12590
+
+
+### from https://cosmos.directory/osmosis/nodes
+
+# Lavender.Five Nodes 🐝
+osmosis.lavenderfive.com:443
+osmosis-grpc.lavenderfive.com:443
+
+# Notional
+grpc-osmosis-ia.cosmosia.notional.ventures:443
+
+# Stakin
+osmosis.grpc.stakin-nodes.com:443
+
+# AutoStake 🛡️ Slash Protected
+osmosis-mainnet-grpc.autostake.com:443
+
+# Cosmos Spaces
+grpc-osmosis.cosmos-spaces.cloud:1130
+
+# Stakeflow
+grpc-osmosis-01.stakeflow.io:6754
+
+# Staketab
+services.staketab.com:9010
+
+# w3coins
+osmosis-grpc.w3coins.io:12590
+
+# MMS
+grpc-osmosis.mms.team:443
+
+# Allnodes ⚡️ Nodes & Staking
+osmosis-grpc.publicnode.com:443
+
+# StakeTown
+osmosis-grpc.stake-town.com:443
+
+# Nodeist
+https://grpc-osmosis.nodeist.net
+
+# L0vd.com ❤️
+osmosis-mainnet.grpc.l0vd.com:80
+
+# WhisperNode 🤐
+grpc-osmosis.whispernode.com:443
+
+# Validatus
+grpc.osmosis.validatus.com:443
+
+# Bro_n_Bro
+https://grpc.osmosis.bronbro.io:443
+
+# [NODERS]TEAM
+osmosis-grpc.noders.services:10090
+
+# Chainroot
+osmosis-grpc.chainroot.io:443
