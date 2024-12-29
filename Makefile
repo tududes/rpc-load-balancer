@@ -9,7 +9,7 @@ GIT_REPO=rpc-load-balancer
 endif
 
 ifndef REPO_PATH
-REPO_PATH=~/${GIT_REPO}
+REPO_PATH=~/g${GIT_REPO}
 endif
 
 ifndef RPC_LB_DOMAIN
