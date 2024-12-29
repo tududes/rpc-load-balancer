@@ -1,5 +1,5 @@
 
-# RPC Load Balancer Setup
+# gRPC Load Balancer Setup
 
 This repository provides tools for automated testing and setting up a dynamic gRPC load balancer using `nginx`.
 
