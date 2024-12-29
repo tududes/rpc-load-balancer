@@ -49,15 +49,15 @@ server {
         proxy_pass http://$$osmosis_rpc_upstream;
 
         # Retry on error/timeouts
-        proxy_intercept_errors on;
-        proxy_next_upstream error timeout http_500 http_502 http_503 http_504 http_403 http_404;
-        proxy_next_upstream_tries 3;
-        proxy_next_upstream_timeout 10s;
+        # proxy_intercept_errors on;
+        # proxy_next_upstream error timeout http_500 http_502 http_503 http_504 http_403 http_404;
+        # proxy_next_upstream_tries 3;
+        # proxy_next_upstream_timeout 10s;
 
         # Timeouts
-        proxy_connect_timeout 3s;
-        proxy_read_timeout    120s;
-        proxy_send_timeout    10s;
+        # proxy_connect_timeout 3s;
+        # proxy_read_timeout    120s;
+        # proxy_send_timeout    10s;
 
         # Pass headers
         proxy_set_header Host           $$osmosis_rpc_upstream;
