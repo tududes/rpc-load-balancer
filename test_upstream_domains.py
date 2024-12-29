@@ -27,7 +27,7 @@ TEST_SERVER_NAME = os.path.basename(TEST_CONFIG_PATH).split(".")[0]
 TEST_LISTEN_PORT = 443
 
 # Curl URL for testing
-CURL_TEST_URL = f"https://{TEST_SERVER_NAME}:{TEST_LISTEN_PORT}/"
+CURL_TEST_URL = f"127.0.0.1:{TEST_LISTEN_PORT}"
 
 # Markers in the config where we insert our random upstream lines
 BEGIN_MARKER = "#BEGIN_SPLIT_CLIENTS\n"
@@ -62,17 +62,19 @@ def curl_test(url):
     """
     
     # replace the cmd with a curl command that returns the http code
-    cmd = ["curl", "-ks", "-o", "/dev/null", "-w", "%{http_code}", "--resolve", f"{TEST_SERVER_NAME}:{TEST_LISTEN_PORT}:127.0.0.1", url]
+    cmd = ["grpcurl", "-connect-timeout", "2", "-insecure", "-authority", TEST_SERVER_NAME, url, "list"]
+    print(cmd)
     
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
-        print("[CURL ERROR]", proc.stderr.strip())
+        print("[GRPCURL ERROR]", proc.stderr.strip())
         return False
 
-    http_code = proc.stdout.strip()
-    print("[CURL RESPONSE]", http_code)
-    # If 2xx => success
-    return http_code.startswith("2")
+    response = proc.stdout.strip()
+    result = "Query" in response or None
+    print("[GRPCURL RESPONSE]", result)
+    
+    return result
 
 
 ####################################
@@ -130,7 +132,7 @@ def build_config_for_single_domain(config_text, domain):
     # as the single line in that block (100%).
     new_block_lines = [
         BEGIN_MARKER,
-        f"\t*\t\"{domain}\";\n",  # 100% traffic to this domain
+        f"\t*\t{domain};\n",  # 100% traffic to this domain
         END_MARKER
     ]
     
@@ -140,8 +142,8 @@ def build_config_for_single_domain(config_text, domain):
     # Find the server_name line and replace it
     config_text = [re.sub(r"server_name\s+[^;]+;", f"server_name {TEST_SERVER_NAME};", line) for line in config_text]
     
-    # For any instance of osmosis_rpc_upstream replace it with osmosis_rpc_upstream_test
-    config_text = [re.sub(r"osmosis_rpc_upstream", TEST_SERVER_NAME.replace("-", "_"), line) for line in config_text]
+    # For any instance of osmosis_grpc_upstream replace it with osmosis_grpc_upstream_test
+    config_text = [re.sub(r"osmosis_grpc_upstream", TEST_SERVER_NAME.replace("-", "_"), line) for line in config_text]
 
     return config_text
 
@@ -171,14 +173,14 @@ def build_final_config(config_text, working_domains):
     
     if n == 1:
         # Only one domain => a single line: '* "domain";'
-        new_block_lines.append(f"\t*\t\"{working_domains[0]}\";\n")
+        new_block_lines.append(f"\t*\t{working_domains[0]};\n")
     else:
         fraction_str = f"{percentage:.2f}%"
         for d in working_domains[:-1]:
-            new_block_lines.append(f"\t{fraction_str}\t\"{d}\";\n")
+            new_block_lines.append(f"\t{fraction_str}\t{d};\n")
         
         # final domain with '*'
-        new_block_lines.append(f"\t*\t\"{working_domains[-1]}\";\n")
+        new_block_lines.append(f"\t*\t{working_domains[-1]};\n")
 
     new_block_lines.append(END_MARKER)
 

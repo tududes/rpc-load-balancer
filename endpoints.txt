@@ -1,14 +1,19 @@
-# Osmosis.zone docs
-https://rpc.osmosis.zone
+# Osmosis.zone Endpoints
+grpc.osmosis.zone:443
+grpc.archive.osmosis.zone:443
 
-# 1RPC
-https://1rpc.io/osmosis-rpc
+# Lavender Five
+osmosis.lavenderfive.com:443
+osmosis-grpc.lavenderfive.com
 
-# Allnodes
-https://osmosis-rpc.publicnode.com
+# Stakin Nodes
+osmosis.grpc.stakin-nodes.com:443
 
-# Chainroot
-https://osmosis-rpc.chainroot.io
+# Validatus
+grpc.osmosis.validatus.com:443
 
-# Stakin
-https://osmosis.rpc.stakin-nodes.com
+# Stake Systems
+osmosis.stakesystems.io:2083
+
+# Polkachu
+osmosis-grpc.polkachu.com:12590

@@ -13,20 +13,20 @@ REPO_PATH=~/${GIT_REPO}
 endif
 
 ifndef RPC_LB_DOMAIN
-RPC_LB_DOMAIN=osmosis-rpc.tududes.com
+RPC_LB_DOMAIN=osmosis-grpc.tududes.com
 endif
 
 ifndef RPC_LB_SITE_FILE
-RPC_LB_SITE_FILE=osmosis-rpc-load-balancer
+RPC_LB_SITE_FILE=osmosis-grpc-load-balancer
 endif
 
 
 define RPC_LB_SITE_CONTENTS
-split_clients "$${msec}$${remote_addr}$${remote_port}" $$osmosis_rpc_upstream {
+split_clients "$${msec}$${remote_addr}$${remote_port}" $$osmosis_grpc_upstream {
 #BEGIN_SPLIT_CLIENTS
-	99%	localhost:26657;
+	99%	localhost:9090;
 # Always use DOT at end entry if you wonder why, read the SC code.
-	*	localhost:26657;
+	*	localhost:9090;
 #END_SPLIT_CLIENTS
 }
 
@@ -37,49 +37,17 @@ server {
 }
 
 server {
-    listen 443 ssl http2;
-    server_name ${RPC_LB_DOMAIN};
-    resolver 8.8.8.8;
+	listen 443 ssl http2;
+	server_name ${RPC_LB_DOMAIN};
+	resolver 8.8.8.8;
 
-    ssl_certificate     /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
+	ssl_certificate	 /etc/letsencrypt/live/${RPC_LB_DOMAIN}/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/${RPC_LB_DOMAIN}/privkey.pem;
 
-    location / {
-        # Pass to whichever upstream was chosen above
-        proxy_pass http://$$osmosis_rpc_upstream;
-
-        # Retry on error/timeouts
-        proxy_intercept_errors on;
-        proxy_next_upstream error timeout http_500 http_502 http_503 http_504 http_403 http_404;
-        proxy_next_upstream_tries 3;
-        proxy_next_upstream_timeout 10s;
-
-        # Timeouts
-        proxy_connect_timeout 3s;
-        proxy_read_timeout    120s;
-        proxy_send_timeout    10s;
-
-        # Pass headers
-        proxy_set_header Host           $$osmosis_rpc_upstream;
-        proxy_set_header X-Real-IP      $$remote_addr;
-        proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
-        proxy_set_header Upgrade        $$http_upgrade;
-        proxy_set_header Connection     "upgrade";
-
-        # CORS
-        proxy_hide_header Access-Control-Allow-Origin;
-        add_header Access-Control-Allow-Origin * always;
-        add_header Access-Control-Expose-Headers Content-Length;
-
-        if ($$request_method = OPTIONS) {
-            add_header Access-Control-Allow-Origin   * always;
-            add_header Access-Control-Expose-Headers Content-Length;
-            return 204;
-        }
-
-        proxy_http_version 1.1;
-        proxy_ssl_verify off;
-    }
+	location / {
+		# Pass to whichever upstream was chosen above
+		grpc_pass $$osmosis_grpc_upstream;
+	}
 }
 endef
 export RPC_LB_SITE_CONTENTS
@@ -92,6 +60,7 @@ install: rpc-load-balancer do-install update-list test-list
 do-install:
 	sudo ufw allow 80/tcp
 	sudo ufw allow 443/tcp
+	sudo python3 -m pip install grpcio grpcio-tools grpcio-reflection
 	sudo apt -y --only-upgrade install python3-urllib3
 	sudo python3 -m pip uninstall -y urllib3
 	sudo python3 -m pip install urllib3
@@ -118,7 +87,7 @@ update-list: rpc-load-balancer-staged
 
 test-list:
 	cd ${REPO_PATH} && sudo python3 test_upstream_domains.py /etc/nginx/sites-available/${RPC_LB_SITE_FILE}-staged
-    curl -s -k https://${RPC_LB_DOMAIN}/block;
+	curl -s -k https://${RPC_LB_DOMAIN}/block;
 
 test-endpoints:
 	export NUM_UPSTREAMS=$$(grep -c "server " /etc/nginx/sites-available/${RPC_LB_SITE_FILE}); \
