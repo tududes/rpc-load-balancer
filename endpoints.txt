@@ -1,7 +1,7 @@
 # Osmosis.zone Endpoints
 grpc.osmosis.zone:443
 grpc-prod.osmosis.zone:443
-grpc.archive.osmosis.zone:443
+#grpc.archive.osmosis.zone:443
 
 # Lavender Five
 osmosis.lavenderfive.com:443
