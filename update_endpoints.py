@@ -91,6 +91,20 @@ for endpoint in endpoints:
                 print(f"Error fetching data from {endpoint}: {e}")
                 continue
             
+            
+            # make sure the tx_index is on
+            try:
+                response = requests.get(f"{endpoint}/status", timeout=1)
+                data = response.json()
+                tx_indexer_status = data.get('result', {}).get('node_info', {}).get('other', {}).get('tx_index', '')
+                if tx_indexer_status != "on":
+                    print(f"Endpoint {endpoint} has tx_index: {tx_indexer_status}")
+                    continue
+            except Exception as e:
+                print(f"Error fetching data from {endpoint}: {e}")
+                continue
+            
+            
             # get info from the block endpoint
             try:
                 response = requests.get(f"{endpoint}/block", timeout=1)
