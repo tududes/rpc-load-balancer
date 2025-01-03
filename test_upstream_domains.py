@@ -52,7 +52,8 @@ def run_cmd(cmd, check=True):
 def nginx_test_and_reload():
     """Run 'nginx -t' and 'systemctl reload nginx'."""
     run_cmd(["sudo", "nginx", "-t"])
-    run_cmd(["sudo", "systemctl", "reload", "nginx"])
+    #run_cmd(["sudo", "systemctl", "reload", "nginx"])
+    run_cmd(["sudo", "nginx", "-s", "reload"])
     time.sleep(1)  # short pause to let reload settle
 
 def curl_test(url):
