@@ -95,7 +95,7 @@ do-install:
 	sudo apt install certbot python3-certbot-nginx -y
 	sudo certbot certonly --manual --preferred-challenges=dns --server https://acme-v02.api.letsencrypt.org/directory --domain ${RPC_LB_DOMAIN}
 #	sudo certbot --nginx -d ${RPC_LB_DOMAIN} --register-unsafely-without-email --agree-tos
-	sudo systemctl reload nginx
+	sudo nginx -s reload
 
 pull:
 	cd ${REPO_PATH} && git pull
